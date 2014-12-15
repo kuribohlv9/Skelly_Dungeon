@@ -6,11 +6,12 @@ class Keyboard;
 class Player : public Entity
 {
 public:
-	Player(Keyboard* keyboard, Sprite* sprite);
+	Player(Keyboard* keyboard, SpriteAnimation* sprite);
 	~Player();
 
 	void Update(float deltatime);
 	Sprite* GetSprite();
+	SpriteAnimation* GetAniSprite();
 	Collider* GetCollider();
 	float GetX();
 	float GetY();
@@ -24,7 +25,7 @@ private:
 	bool m_visible;
 
 	Collider* m_collider;
-	Sprite* m_sprite;
+	SpriteAnimation* m_sprite;
 	Keyboard* m_keyboard;
 };
 

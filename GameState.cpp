@@ -7,6 +7,7 @@
 #include "DrawManager.h"
 #include "SpriteManager.h"
 #include "Sprite.h"
+#include "SpriteAnimation.h"
 #include "GameState.h"
 
 #include "Player.h"
@@ -17,10 +18,10 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-	std::string filename = "../assets/legendofzelda_link_sheet.png";
+	std::string filename = "../assets/Player.txt";
 
-	Sprite* sprite = m_systems.sprite_manager->CreateSprite(
-		filename, 0, 0, 16, 16);
+	SpriteAnimation* sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
+	sprite->SetAnimation("player");
 
 	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite);
 	m_entities.push_back(player);
@@ -49,16 +50,17 @@ bool GameState::Update(float deltatime)
 	// update all entities
 	for (unsigned int i = 0; i < m_entities.size(); i++)
 	{
-		//if (!m_entities[i]->IsVisible())
-		//	continue;
+		if (!m_entities[i]->IsVisible())
+			continue;
 
 		// update
 		m_entities[i]->Update(deltatime);
+		m_entities[i]->GetSprite()->Update(0.5f);
 	}
 
 	// we always do collision checking after updating 
 	// positions et al in entities
-	//CollisionChecking();
+	CollisionChecking();
 
 	return true;
 }
@@ -78,6 +80,7 @@ void GameState::Draw()
 				m_entities[i]->GetY());
 		}
 	}
+
 }
 
 State* GameState::NextState()

@@ -6,6 +6,8 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <fstream>
+#include <sstream>
 
 #include <string>
 #include <vector>

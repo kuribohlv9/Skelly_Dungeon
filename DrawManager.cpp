@@ -33,6 +33,7 @@ bool DrawManager::Initialize(int width, int height)
 		return false;
 	}
 
+	SDL_RenderSetScale(m_renderer, 3.0f, 3.0f);
 	SDL_SetRenderDrawColor(m_renderer, 0x11, 0x12, 0x13, 0xff);
 
 	return true;

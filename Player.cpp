@@ -3,9 +3,10 @@
 #include "Collider.h"
 #include "Sprite.h"
 #include "Keyboard.h"
+#include "SpriteAnimation.h"
 
 
-Player::Player(Keyboard* keyboard, Sprite* sprite)
+Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 {
 	m_x = 100.0f;
 	m_y = 100.0f;
@@ -31,6 +32,11 @@ void Player::Update(float deltatime)
 }
 
 Sprite* Player::GetSprite()
+{
+	return m_sprite;
+}
+
+SpriteAnimation* Player::GetAniSprite()
 {
 	return m_sprite;
 }

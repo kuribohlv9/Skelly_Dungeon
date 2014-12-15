@@ -11,8 +11,9 @@ public:
 
 	SDL_Rect* GetRegion();
 	SDL_Texture* GetTexture();
+	virtual void Update(float deltatime);
 
-private:
+protected:
 	SDL_Rect m_region;
 	SDL_Texture* m_texture;
 };

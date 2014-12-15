@@ -4,6 +4,7 @@
 #define SPRITEMANAGER_H_INCLUDED
 
 class Sprite;
+class SpriteAnimation;
 
 class SpriteManager
 {
@@ -15,6 +16,7 @@ public:
 
 	Sprite* CreateSprite(const std::string& filename, int x, int y, int w, int h);
 	void DestroySprite(Sprite* sprite);
+	SpriteAnimation* CreateAnimatedSprite(const std::string& filename);
 
 private:
 	SDL_Renderer* m_renderer;

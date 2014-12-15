@@ -25,3 +25,8 @@ SDL_Texture* Sprite::GetTexture()
 {
 	return m_texture;
 }
+
+void Sprite::Update(float deltatime)
+{
+
+}

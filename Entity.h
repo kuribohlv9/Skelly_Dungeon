@@ -13,6 +13,7 @@ enum EEntityType
 
 class Sprite;
 class Collider;
+class SpriteAnimation;
 
 class Entity
 {
