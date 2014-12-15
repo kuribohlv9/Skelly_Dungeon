@@ -23,4 +23,3 @@ private:
 };
 
 #endif // SPRITEMANAGER_H_INCLUDED
-// hiya

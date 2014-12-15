@@ -80,3 +80,5 @@ $RECYCLE.BIN/
 Arkanoid.sdf
 *.sdf
 *.vcxproj
+Arkanoid.vcxproj.filters
+Arkanoid.vcxproj

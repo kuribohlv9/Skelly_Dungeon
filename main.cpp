@@ -5,21 +5,6 @@
 
 // !! bit.ly/1vSPzOk !! 
 
-// topics
-// == previous:
-// Engine
-//   DrawManager
-//   InputManager
-//     Mouse
-//     Keyboard
-
-// == today: 
-//   StateManager
-//     State 
-//     GameState
-//   TextureManager
-//   CollisionManager
-
 
 int main(int argc, char* argv[])
 {

@@ -9,6 +9,7 @@ enum EEntityType
 	ENTITY_PLAYER,
 	ENTITY_BLOCK,
 	ENTITY_BALL,
+	ENTITY_HEART,
 };
 
 class Sprite;
