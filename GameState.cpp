@@ -27,10 +27,12 @@ GameState::GameState(System& system)
 	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite);
 	m_entities.push_back(player);
 
-	sprite = m_systems.sprite_manager->CreateSprite(													// fetching the heart sprite from the png sheet
+	filename = "../assets/legendofzelda_link_sheet.png";
+
+	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(													// fetching the heart sprite from the png sheet
 		filename, 240, 192, 16, 16);
 
-	Heart* heart = new Heart(sprite, 200, 300);															// makes a new heart with set a giving position of 200x300
+	Heart* heart = new Heart(realSprite, 50, 50);															// makes a new heart with set a giving position of 200x300
 	m_entities.push_back(heart);																		// adds heart sprite to the vector
 
 	m_active = false;
