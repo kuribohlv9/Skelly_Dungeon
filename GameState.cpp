@@ -13,7 +13,6 @@
 
 #include "Collider.h"
 #include "CollisionManager.h"
-//Comment
 GameState::GameState(System& system)
 {
 	m_systems = system;

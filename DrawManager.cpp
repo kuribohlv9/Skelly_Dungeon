@@ -14,7 +14,6 @@ DrawManager::~DrawManager()
 {
 	Shutdown();
 }
-//derp
 
 bool DrawManager::Initialize(int width, int height)
 {
