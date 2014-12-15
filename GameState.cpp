@@ -19,7 +19,7 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-	std::string filename = "../assets/Player.txt";
+	std::string filename = "../Skelly_Dungeon/assets/Player.txt";
 
 	SpriteAnimation* sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("player");
@@ -27,7 +27,7 @@ GameState::GameState(System& system)
 	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite);
 	m_entities.push_back(player);
 
-	filename = "../assets/legendofzelda_link_sheet.png";
+	filename = "../Skelly_Dungeon/assets/legendofzelda_link_sheet.png";
 
 	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(													// fetching the heart sprite from the png sheet
 		filename, 240, 192, 16, 16);
