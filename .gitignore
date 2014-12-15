@@ -69,3 +69,9 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.sdf
+*.sdf
+*.suo
+*.opensdf
+*.ipch
+*.suo
