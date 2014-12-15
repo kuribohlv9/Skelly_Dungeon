@@ -75,3 +75,6 @@ $RECYCLE.BIN/
 *.opensdf
 *.ipch
 *.suo
+*.sln
+*.sdf
+Arkanoid.sdf
