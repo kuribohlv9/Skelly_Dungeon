@@ -78,3 +78,5 @@ $RECYCLE.BIN/
 *.sln
 *.sdf
 Arkanoid.sdf
+*.sdf
+*.vcxproj
