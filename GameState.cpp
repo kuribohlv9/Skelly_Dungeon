@@ -113,7 +113,7 @@ void GameState::CollisionChecking()
 			// if the collision manager detects a collision between player's hitbox and the item's hitbox
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
 			{
-				Item* item = reinterpret_cast<Item*>(m_entities[i]);								// we reinterpret the abstract class Item as class Entity so that we can access Entity's collider
+				Item* item = dynamic_cast<Item*>(m_entities[i]);								// we reinterpret the abstract class Item as class Entity so that we can access Entity's collider
 				item->PickUp(player);																// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
 			}
 		}

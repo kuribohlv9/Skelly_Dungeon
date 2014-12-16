@@ -66,7 +66,7 @@ void Heart::SetInvisible()
 
 EEntityType Heart::GetType()
 {
-	return ENTITY_HEART;
+	return ENTITY_ITEM;
 }
 
 void Heart::PickUp(Player* player)
