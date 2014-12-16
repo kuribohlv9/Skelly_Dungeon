@@ -65,8 +65,9 @@ EEntityType Heart::GetType()
 	return ENTITY_HEART;
 }
 
-void Heart::PickUp()
+void Heart::PickUp(Player* player)
 {
 	// here will be the code to pick up hearts. The heart will turn invisible, we'll ignore collision for it, and Link's heart counter, a variable within Player.h, will increase
-	
+	SetInvisible();
+	player->SetHearts(1);
 }

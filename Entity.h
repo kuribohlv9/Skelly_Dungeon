@@ -8,6 +8,7 @@ enum EEntityType
 	ENTITY_UNKNOWN,
 	ENTITY_PLAYER,
 	ENTITY_HEART,
+	ENTITY_ITEM
 };
 
 class Sprite;

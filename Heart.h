@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Item.h"
 
+class Player;
 
 class Heart : public Item, public Entity															// inherits from both pure virtual classes, Item and Entity
 {
@@ -22,7 +23,7 @@ public:
 
 	Collider* GetCollider();
 	EEntityType GetType();
-	void PickUp();																					// instantiation of the pure virtual function PickUp() from Item.h
+	void PickUp(Player* player);																					// instantiation of the pure virtual function PickUp() from Item.h
 
 private:
 	float m_x;

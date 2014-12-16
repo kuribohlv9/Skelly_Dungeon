@@ -108,7 +108,7 @@ void GameState::CollisionChecking()
 	// looking through the entities vector for items
 	for (int i = 1; i < m_entities.size(); i++)
 	{
-		if (m_entities[i]->GetType == ENTITY_ITEM)
+		if (m_entities[i]->GetType() == ENTITY_ITEM)
 		{
 			// if the collision manager detects a collision between player's hitbox and the item's hitbox
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
