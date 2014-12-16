@@ -14,6 +14,8 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	m_sprite = sprite;
 	m_keyboard = keyboard;
 
+	HeartCounter = 4;																				// sets starting HeartCounter to 4
+
 	m_collider = new Collider(0, 0);
 	m_collider->SetWidthHeight(m_sprite->GetRegion()->w, m_sprite->GetRegion()->h);
 
@@ -64,4 +66,9 @@ bool Player::IsVisible()
 EEntityType Player::GetType()
 {
 	return ENTITY_PLAYER;
+}
+
+void Player::SetHearts(int change)
+{
+	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
 }
