@@ -21,6 +21,8 @@ public:
 private:
 	float m_x;
 	float m_y;
+	float m_directionX;
+	float m_directionY;
 	float m_speed;
 	bool m_visible;
 

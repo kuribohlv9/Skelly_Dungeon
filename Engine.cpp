@@ -124,6 +124,50 @@ void Engine::HandleEvents()
 			m_input_manager->SetMouseButton(index, false);
 		}
 			break;
+		case SDL_KEYDOWN:
+		{
+			//Look at what is being pressed and send the information to the keyobard object
+
+			SDL_Keycode key = event.key.keysym.sym;
+			if (key == SDLK_UP)
+			{
+				m_input_manager->SetKeyboard(0, true);
+			}
+			else if (key == SDLK_DOWN)
+			{
+				m_input_manager->SetKeyboard(1, true);
+			}
+			else if (key == SDLK_LEFT)
+			{
+				m_input_manager->SetKeyboard(2, true);
+			}
+			else if (key == SDLK_RIGHT)
+			{
+				m_input_manager->SetKeyboard(3, true);
+			}
+			break;
+		}
+		case SDL_KEYUP:
+		{
+			SDL_Keycode key = event.key.keysym.sym;
+			if (key == SDLK_UP)
+			{
+				m_input_manager->SetKeyboard(0, false);
+			}
+			else if (key == SDLK_DOWN)
+			{
+				m_input_manager->SetKeyboard(1, false);
+			}
+			else if (key == SDLK_LEFT)
+			{
+				m_input_manager->SetKeyboard(2, false);
+			}
+			else if (key == SDLK_RIGHT)
+			{
+				m_input_manager->SetKeyboard(3, false);
+			}
+			break;
+		}
 		}
 	}
 }

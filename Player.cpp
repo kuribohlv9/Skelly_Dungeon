@@ -8,15 +8,26 @@
 
 Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 {
+	//Starting point
 	m_x = 100.0f;
 	m_y = 100.0f;
-	m_speed = 2.0f;
+
+	//Set the players initial speed
+	m_speed = 100.0f;
+
+	//Set Directions
+	m_directionX = 0.0f;
+	m_directionY = 0.0f;
+
+	//Set sprite and keyboard
 	m_sprite = sprite;
 	m_keyboard = keyboard;
 
+	//Initialize Collider
 	m_collider = new Collider(0, 0);
 	m_collider->SetWidthHeight(m_sprite->GetRegion()->w, m_sprite->GetRegion()->h);
 
+	//Set visible
 	m_visible = true;
 
 }
@@ -28,6 +39,50 @@ Player::~Player()
 
 void Player::Update(float deltatime)
 {
+	//Look at whay keys are down and add to that direction
+
+	if (m_keyboard->IsKeyDown(0))
+	{
+		//Up
+		m_directionY -= 1;
+	}
+	if (m_keyboard->IsKeyDown(1))
+	{
+		//Down
+		m_directionY += 1;
+	}
+	if (m_keyboard->IsKeyDown(2))
+	{
+		//Left
+		m_directionX -= 1;
+	}
+	if (m_keyboard->IsKeyDown(3))
+	{
+		//Right
+		m_directionX += 1;
+	}
+
+	//Normalize the direction so diagonal movement is at normal speed
+	float lenght = sqrt(m_directionX * m_directionX + m_directionY * m_directionY);
+
+	//if not division by zero
+	if (lenght != 0.0f)
+	{
+		//Normalize
+		m_directionX /= lenght;
+		m_directionY /= lenght;
+	}
+
+	//Change the players position in X and Y based on the direction, speed and deltatime
+	m_x += (m_directionX * m_speed * deltatime);
+	m_y += (m_directionY * m_speed * deltatime);
+
+	//Set the direction to zero so we won't speed up
+	m_directionX = 0;
+	m_directionY = 0;
+
+	//Update the collider
+	m_collider->SetPosition(m_x, m_y);
 
 }
 

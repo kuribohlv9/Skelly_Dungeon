@@ -1,4 +1,4 @@
 ../assets/legendofzelda_link_sheet.png
-player 2
+down 2
 7 0 0 16 16
 7 0 30 16 16

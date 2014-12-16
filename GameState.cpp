@@ -22,7 +22,7 @@ GameState::GameState(System& system)
 	std::string filename = "../Skelly_Dungeon/assets/Player.txt";
 
 	SpriteAnimation* sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
-	sprite->SetAnimation("player");
+	sprite->SetAnimation("down");
 
 	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite);
 	m_entities.push_back(player);
