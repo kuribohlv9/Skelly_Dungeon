@@ -29,11 +29,11 @@ GameState::GameState(System& system)
 
 	filename = "../Skelly_Dungeon/assets/legendofzelda_link_sheet.png";
 
-	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(													// fetching the heart sprite from the png sheet
+	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(											// fetching the heart sprite from the png sheet
 		filename, 240, 192, 16, 16);
 
 	Heart* heart = new Heart(realSprite, 50, 50);															// makes a new heart with set a giving position of 200x300
-	m_entities.push_back(heart);																		// adds heart sprite to the vector
+	m_entities.push_back(heart);																			// adds heart sprite to the vector
 
 	m_active = false;
 }
