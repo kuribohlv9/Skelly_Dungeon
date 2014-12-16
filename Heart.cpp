@@ -14,6 +14,10 @@ Heart::Heart(Sprite* sprite, float startX, float startY)
 	m_x = startX;
 	m_y = startY;
 
+	//Initialize Collider
+	m_collider = new Collider(m_x, m_y);
+	m_collider->SetWidthHeight(m_sprite->GetRegion()->w, m_sprite->GetRegion()->h);
+
 	m_visible = true;
 }
 
