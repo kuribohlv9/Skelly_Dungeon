@@ -1,9 +1,13 @@
-#include "Entity.h"
-#include "Player.h"
+// Heart.h
 
 #pragma once
 
-class Heart : public Entity
+#include "Entity.h"
+#include "Player.h"
+#include "Item.h"
+
+
+class Heart : public Item, public Entity															// inherits from both pure virtual classes, Item and Entity
 {
 public:
 	Heart(Sprite* sprite, float startX, float startY);
@@ -11,11 +15,14 @@ public:
 
 	void Update(float deltatime);
 	Sprite* GetSprite();
-	Collider* GetCollider();
 	float GetX();
 	float GetY();
+	void SetInvisible();
 	bool IsVisible();
+
+	Collider* GetCollider();
 	EEntityType GetType();
+	void PickUp();																					// instantiation of the pure virtual function PickUp() from Item.h
 
 private:
 	float m_x;

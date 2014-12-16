@@ -12,6 +12,7 @@
 
 #include "Heart.h"
 #include "Player.h"
+#include "Item.h"
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -29,11 +30,11 @@ GameState::GameState(System& system)
 
 	filename = "../Skelly_Dungeon/assets/legendofzelda_link_sheet.png";
 
-	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(													// fetching the heart sprite from the png sheet
+	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(											// fetching the heart sprite from the png sheet
 		filename, 240, 192, 16, 16);
 
 	Heart* heart = new Heart(realSprite, 50, 50);															// makes a new heart with set a giving position of 200x300
-	m_entities.push_back(heart);																		// adds heart sprite to the vector
+	m_entities.push_back(heart);																			// adds heart sprite to the vector
 
 	m_active = false;
 }
@@ -101,11 +102,26 @@ State* GameState::NextState()
 // private
 void GameState::CollisionChecking()
 {
+	Player* player = static_cast<Player*>(m_entities[0]);
 	int overlapX = 0, overlapY = 0;
-	//if (CollisionManager::Check(ball->GetCollider(), paddle->GetCollider(), overlapX, overlapY))
+
+	// looking through the entities vector for items
+	for (int i = 1; i < m_entities.size(); i++)
 	{
-		
+		if (m_entities[i]->GetType == ENTITY_ITEM)
+		{
+			// if the collision manager detects a collision between player's hitbox and the item's hitbox
+			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
+			{
+				Item* item = reinterpret_cast<Item*>(m_entities[i]);								// we reinterpret the abstract class Item as class Entity so that we can access Entity's collider
+				item->PickUp(player);																// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
+			}
+		}
 	}
+	
+			//increase player hp by one and make heart invisible
+
+			
 	//else
 	{
 		

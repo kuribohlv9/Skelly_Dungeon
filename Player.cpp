@@ -30,6 +30,7 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	//Set visible
 	m_visible = true;
 
+	HeartCounter = 4;																				// sets starting HeartCounter to 4
 }
 
 
@@ -119,4 +120,9 @@ bool Player::IsVisible()
 EEntityType Player::GetType()
 {
 	return ENTITY_PLAYER;
+}
+
+void Player::SetHearts(int change)
+{
+	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
 }

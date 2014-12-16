@@ -1,5 +1,8 @@
+// Heart.cpp
+
 #include "stdafx.h"
 #include "Heart.h"
+#include "Item.h"																					// do I need this?
 #include "Collider.h"
 #include "Sprite.h"
 
@@ -52,7 +55,18 @@ bool Heart::IsVisible()
 
 }
 
+void Heart::SetInvisible()
+{
+	m_visible = false;
+}
+
 EEntityType Heart::GetType()
 {
 	return ENTITY_HEART;
+}
+
+void Heart::PickUp()
+{
+	// here will be the code to pick up hearts. The heart will turn invisible, we'll ignore collision for it, and Link's heart counter, a variable within Player.h, will increase
+	
 }
