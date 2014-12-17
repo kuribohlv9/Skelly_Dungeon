@@ -1,4 +1,13 @@
-../assets/legendofzelda_link_sheet.png
+../Skelly_Dungeon/assets/legendofzelda_link_sheet.png
 down 2
 7 0 0 16 16
 7 0 30 16 16
+left 2
+7 30 0 16 16
+7 30 30 16 16
+up 2
+7 60 0 16 16
+7 60 30 16 16
+right 2
+7 90 0 16 16
+7 90 30 16 16

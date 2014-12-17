@@ -42,25 +42,37 @@ void Player::Update(float deltatime)
 {
 	//Look at whay keys are down and add to that direction
 
-	if (m_keyboard->IsKeyDown(0))
-	{
-		//Up
-		m_directionY -= 1;
-	}
-	if (m_keyboard->IsKeyDown(1))
-	{
-		//Down
-		m_directionY += 1;
-	}
+	std::string direction;
+
 	if (m_keyboard->IsKeyDown(2))
 	{
 		//Left
 		m_directionX -= 1;
+		direction = "left";
 	}
 	if (m_keyboard->IsKeyDown(3))
 	{
 		//Right
 		m_directionX += 1;
+		direction = "right";
+	}
+	if (m_keyboard->IsKeyDown(0))
+	{
+		//Up
+		m_directionY -= 1;
+		direction = "up";
+	}
+	if (m_keyboard->IsKeyDown(1))
+	{
+		//Down
+		m_directionY += 1;
+		direction = "down";
+	}
+
+	if (direction != m_last_direction)
+	{
+		m_sprite->SetAnimation(direction);
+		m_last_direction = direction;
 	}
 
 	//Normalize the direction so diagonal movement is at normal speed

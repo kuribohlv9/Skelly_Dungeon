@@ -27,6 +27,7 @@ private:
 	float m_directionY;
 	float m_speed;
 	bool m_visible;
+	std::string m_last_direction;
 
 	float HeartCounter;																				// holds the heart counter variable. Since it's private, we need a public function for changing it, accessible from GameState.cpp
 

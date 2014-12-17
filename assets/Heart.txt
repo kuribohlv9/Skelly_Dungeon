@@ -1,0 +1,4 @@
+../Skelly_Dungeon/assets/legendofzelda_link_sheet.png
+heart 2
+5 240 192 16 16
+5 270 192 16 16

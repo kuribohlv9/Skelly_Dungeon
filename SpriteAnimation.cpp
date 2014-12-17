@@ -55,3 +55,7 @@ void SpriteAnimation::SetAnimation(const std::string& animationName)
 		}
 	}
 }
+std::string SpriteAnimation::GetAnimationName()
+{
+	return m_active_animation;
+}

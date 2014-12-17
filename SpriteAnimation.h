@@ -19,6 +19,7 @@ public:
 	void Update(float deltatime);
 	void AddFrame(const std::string& animationName, const AnimFrame &frame);
 	void SetAnimation(const std::string& animationName);
+	std::string GetAnimationName();
 
 private:
 	std::string m_active_animation;

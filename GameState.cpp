@@ -20,20 +20,26 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
+	//Load player sprite information
 	std::string filename = "../Skelly_Dungeon/assets/Player.txt";
 
+	//Create player sprite
 	SpriteAnimation* sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("down");
 
+	//Create player
 	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite);
 	m_entities.push_back(player);
 
-	filename = "../Skelly_Dungeon/assets/legendofzelda_link_sheet.png";
+	//Load Hearts sprite information
+	filename = "../Skelly_Dungeon/assets/Heart.txt";
 
-	Sprite* realSprite = m_systems.sprite_manager->CreateSprite(											// fetching the heart sprite from the png sheet
-		filename, 240, 192, 16, 16);
+	//Create heart sprite
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
+	sprite->SetAnimation("heart");
 
-	Heart* heart = new Heart(realSprite, 50, 50);															// makes a new heart with set a giving position of 200x300
+	//Create heart
+	Heart* heart = new Heart(sprite, 50, 50);															// makes a new heart with set a giving position of 200x300
 	m_entities.push_back(heart);																			// adds heart sprite to the vector
 
 	m_active = false;
