@@ -24,6 +24,11 @@ Heart::Heart(Sprite* sprite, float startX, float startY)
 
 Heart::~Heart()
 {
+	if (m_collider)
+	{
+		delete m_collider;
+		m_collider = nullptr;
+	}
 }
 
 

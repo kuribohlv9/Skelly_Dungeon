@@ -13,6 +13,7 @@
 #include "Heart.h"
 #include "Player.h"
 #include "Item.h"
+#include "Wall.h"
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -41,6 +42,16 @@ GameState::GameState(System& system)
 	//Create heart
 	Heart* heart = new Heart(sprite, 50, 50);															// makes a new heart with set a giving position of 200x300
 	m_entities.push_back(heart);																			// adds heart sprite to the vector
+
+	//Create wall sprite
+	filename = "../Skelly_Dungeon/assets/Wall.txt";
+
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
+	sprite->SetAnimation("wall");
+
+	Wall* wall = new Wall(sprite);
+
+	m_entities.push_back(wall);
 
 	m_active = false;
 }

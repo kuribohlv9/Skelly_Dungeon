@@ -36,6 +36,11 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 
 Player::~Player()
 {
+	if (m_collider)
+	{
+		delete m_collider;
+		m_collider = nullptr;
+	}
 }
 
 void Player::Update(float deltatime)
