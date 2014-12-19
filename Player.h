@@ -17,6 +17,7 @@ public:
 	float GetY();
 	bool IsVisible();
 	EEntityType GetType();
+	void SetPosition(int x, int y);
 
 	void SetHearts(int change);																		// a public function for changing the heart counter, HeartCounter, a protected variable
 

@@ -139,6 +139,12 @@ EEntityType Player::GetType()
 	return ENTITY_PLAYER;
 }
 
+void Player::SetPosition(int x, int y)
+{
+	m_x = x;
+	m_y = y;
+}
+
 void Player::SetHearts(int change)
 {
 	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState

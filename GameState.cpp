@@ -134,13 +134,12 @@ void GameState::CollisionChecking()
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
 			}
 		}
-	}
-	
-			//increase player hp by one and make heart invisible
-
-			
-	//else
-	{
-		
+		else if (m_entities[i]->GetType() == ENTITY_WALL)
+		{
+			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
+			{
+				player->SetPosition(player->GetX() - overlapX, player->GetY() - overlapY);
+			}
+		}
 	}
 }

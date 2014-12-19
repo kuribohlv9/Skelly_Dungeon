@@ -50,5 +50,5 @@ bool Wall::IsVisible()
 }
 EEntityType Wall::GetType()
 {
-	return ENTITY_UNKNOWN;
+	return ENTITY_WALL;
 }
