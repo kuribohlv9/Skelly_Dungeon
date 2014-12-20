@@ -45,7 +45,7 @@ Player::~Player()
 
 void Player::Update(float deltatime)
 {
-	//Look at whay keys are down and add to that direction
+	//Look at what keys are down and add to that direction
 
 	std::string direction;
 

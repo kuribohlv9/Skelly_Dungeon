@@ -94,7 +94,7 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
-	for (unsigned int i = 0; i < m_entities.size(); i++)
+	for (unsigned int i = m_entities.size()-1; i < -1; i--)
 	{
 		if (!m_entities[i]->IsVisible())
 			continue;
