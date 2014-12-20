@@ -97,6 +97,7 @@
     <ClInclude Include="DrawManager.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Heart.h" />
     <ClInclude Include="InputManager.h" />

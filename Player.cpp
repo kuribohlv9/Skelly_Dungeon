@@ -31,6 +31,8 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	m_visible = true;
 
 	HeartCounter = 4;																				// sets starting HeartCounter to 4
+	m_attacking = false;
+	m_attackTimer = 0.0f;
 }
 
 
@@ -72,6 +74,15 @@ void Player::Update(float deltatime)
 		//Down
 		m_directionY += 1;
 		direction = "down";
+	}
+
+	if (m_keyboard->IsKeyDown(4) && m_attacking == false)
+	{
+		
+		//Attacks in the direction the player is moving in
+		std::string attack = m_sprite->GetAnimationName() + "Attack";
+		m_sprite->SetAnimation(attack);
+		m_attacking = true;
 	}
 
 	if (direction != m_last_direction)

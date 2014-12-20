@@ -11,7 +11,6 @@
 #include "GameState.h"
 
 #include "Heart.h"
-#include "Sword.h"
 #include "Player.h"
 #include "Item.h"
 #include "Wall.h"

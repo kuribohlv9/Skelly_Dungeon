@@ -8,7 +8,7 @@
 
 class Player;
 
-class Heart : public Item, public Entity															// inherits from both pure virtual classes, Item and Entity
+class Heart : public Item, public Entity																			// inherits from both pure virtual classes, Item and Entity
 {
 public:
 	Heart(Sprite* sprite, float startX, float startY);

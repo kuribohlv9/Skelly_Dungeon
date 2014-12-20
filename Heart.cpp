@@ -43,7 +43,6 @@ Sprite* Heart::GetSprite()
 
 Collider* Heart::GetCollider()
 {
-
 	return m_collider;
 }
 

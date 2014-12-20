@@ -145,6 +145,10 @@ void Engine::HandleEvents()
 			{
 				m_input_manager->SetKeyboard(3, true);
 			}
+			else if (key == SDLK_z)
+			{
+				m_input_manager->SetKeyboard(4, true);
+			}
 			break;
 		}
 		case SDL_KEYUP:
@@ -165,6 +169,10 @@ void Engine::HandleEvents()
 			else if (key == SDLK_RIGHT)
 			{
 				m_input_manager->SetKeyboard(3, false);
+			}
+			else if (key == SDLK_z)
+			{
+				m_input_manager->SetKeyboard(4, false);
 			}
 			break;
 		}
