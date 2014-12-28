@@ -8,7 +8,7 @@ class Collider;
 class Wall : public Entity
 {
 public:
-	Wall(Sprite* sprite);
+	Wall(Sprite* sprite, float x, float y);
 	~Wall();
 
 	void Update(float deltatime);

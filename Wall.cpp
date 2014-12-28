@@ -4,10 +4,10 @@
 #include "Sprite.h"
 
 
-Wall::Wall(Sprite* sprite)
+Wall::Wall(Sprite* sprite, float x, float y)
 {
-	m_x = 200;
-	m_y = 200;
+	m_x = x;
+	m_y = y;
 
 	m_sprite = sprite;
 	m_collider = new Collider(m_x, m_y);

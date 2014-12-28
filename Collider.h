@@ -8,13 +8,13 @@ class Entity;
 class Collider
 {
 public:
-	Collider(int x, int y);
+	Collider(float x, float y);
 
 	bool HasParent();
 	void SetParent(Entity* parent);
 	Entity* GetParent();
 
-	void SetPosition(int x, int y);
+	void SetPosition(float x, float y);
 	void SetWidthHeight(int width, int height);
 
 	int GetX();

@@ -9,11 +9,16 @@ enum tileMap
 
 typedef std::vector<std::vector<tileMap>> TileMapVector;
 
+class Entity;
+class Sprite;
+
 class Room
 {
 public:
 	Room(int width, int height, TileMapVector tileMap);
 	~Room();
+
+	void Load(std::vector<Entity*>& entities, Sprite* sprite);
 
 	TileMapVector GetTilemap();
 	int GetWidth();

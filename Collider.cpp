@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Collider.h"
 
-Collider::Collider(int x, int y)
+Collider::Collider(float x, float y)
 {
 	m_parent = nullptr;
 	m_area.x = x;
@@ -28,7 +28,7 @@ Entity* Collider::GetParent()
 	return m_parent;
 }
 
-void Collider::SetPosition(int x, int y)
+void Collider::SetPosition(float x, float y)
 {
 	m_area.x = x;
 	m_area.y = y;

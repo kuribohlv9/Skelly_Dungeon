@@ -18,6 +18,8 @@ public:
 	bool IsVisible();
 	EEntityType GetType();
 	void SetPosition(int x, int y);
+	float GetDirectionX();
+	float GetDirectionY();
 
 	void SetHearts(int change);																		// a public function for changing the heart counter, HeartCounter, a protected variable
 //	void SetSword(bool change);

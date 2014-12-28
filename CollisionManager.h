@@ -21,7 +21,7 @@ public:
 	// they belong to the class, and not a specific instance of the class
 	// all instances can access it
 
-	static bool Check(Collider* lhs, Collider* rhs, int& overlapX, int& overlapY);
+	static bool Check(Collider* lhs, Collider* rhs, float& overlapX, float& overlapY);
 };
 
 #endif // COLLISIONMANAGER_H_INCLUDED

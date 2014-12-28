@@ -47,8 +47,11 @@ Player::~Player()
 
 void Player::Update(float deltatime)
 {
-	//Look at what keys are down and add to that direction
+	//Set the direction to zero so we won't speed up
+	m_directionX = 0;
+	m_directionY = 0;
 
+	//Look at what keys are down and add to that direction
 	std::string direction;
 
 	if (m_keyboard->IsKeyDown(2))
@@ -106,10 +109,6 @@ void Player::Update(float deltatime)
 	m_x += (m_directionX * m_speed * deltatime);
 	m_y += (m_directionY * m_speed * deltatime);
 
-	//Set the direction to zero so we won't speed up
-	m_directionX = 0;
-	m_directionY = 0;
-
 	//Update the collider
 	m_collider->SetPosition(m_x, m_y);
 
@@ -159,4 +158,13 @@ void Player::SetPosition(int x, int y)
 void Player::SetHearts(int change)
 {
 	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
+}
+
+float Player::GetDirectionX()
+{
+	return m_directionX;
+}
+float Player::GetDirectionY()
+{
+	return m_directionY;
 }

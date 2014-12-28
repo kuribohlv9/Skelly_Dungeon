@@ -55,7 +55,13 @@ GameState::GameState(System& system)
 
 	m_roomManager->AddSprite("wall", sprite);
 
-	Wall* wall = new Wall(sprite);
+	Wall* wall = new Wall(sprite, 300, 300);
+	
+	filename = "../Skelly_Dungeon/assets/Ground.txt";
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
+	sprite->SetAnimation("ground");
+
+	m_roomManager->AddSprite("ground", sprite);
 
 	m_entities.push_back(wall);
 
@@ -63,6 +69,7 @@ GameState::GameState(System& system)
 	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room1.txt");
 
 	m_room = room;
+	m_room->Load(m_entities, m_roomManager->GetSprite("wall"));
 	m_active = false;
 }
 
@@ -112,6 +119,11 @@ void GameState::Draw()
 			{
 				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), i * 16, j * 16);
 			}
+			else if (m_room->GetTilemap()[i][j] == TILE_GROUND)
+			{
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), i * 16, j * 16);
+
+			}
 		}
 	}
 
@@ -141,7 +153,7 @@ State* GameState::NextState()
 void GameState::CollisionChecking()
 {
 	Player* player = static_cast<Player*>(m_entities[0]);
-	int overlapX = 0, overlapY = 0;
+	float overlapX = 0, overlapY = 0;
 
 	// looking through the entities vector for items
 	for (int i = 1; i < m_entities.size(); i++)
@@ -159,7 +171,9 @@ void GameState::CollisionChecking()
 		{
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
 			{
+
 				player->SetPosition(player->GetX() - overlapX, player->GetY() - overlapY);
+				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}
 		}
 	}

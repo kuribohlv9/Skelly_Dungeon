@@ -4,7 +4,7 @@
 #include "Collider.h"
 #include "CollisionManager.h"
 
-bool CollisionManager::Check(Collider* lhs, Collider* rhs, int& overlapX, int& overlapY)
+bool CollisionManager::Check(Collider* lhs, Collider* rhs, float& overlapX, float& overlapY)
 {
 	// we use something called Separating Axis Theorem
 	//   link: en.wikipedia.org/wiki/Hyperplane_separation_theorem#Use_in_collision_detection
@@ -40,28 +40,29 @@ bool CollisionManager::Check(Collider* lhs, Collider* rhs, int& overlapX, int& o
 	overlapY = 0;
 
 	// find center of colliders
-	int lhsHalfWidth = lhs->GetWidth() / 2;
-	int rhsHalfWidth = rhs->GetWidth() / 2;
-	int lhsCenterX = lhs->GetX() + lhsHalfWidth;
-	int rhsCenterX = rhs->GetX() + rhsHalfWidth;
-	int centerDeltaX = lhsCenterX - rhsCenterX;
+	float lhsHalfWidth = lhs->GetWidth() / 2;
+	float rhsHalfWidth = rhs->GetWidth() / 2;
+	float lhsCenterX = lhs->GetX() + lhsHalfWidth;
+	float rhsCenterX = rhs->GetX() + rhsHalfWidth;
+	float centerDeltaX = lhsCenterX - rhsCenterX;
 
 	// first we check if the overlap in the x-axis
-	int halfWidth = (lhsHalfWidth + rhsHalfWidth);
+	float halfWidth = (lhsHalfWidth + rhsHalfWidth);
 	if (abs(centerDeltaX) < halfWidth)
 	{
-		int lhsHalfHeight = lhs->GetHeight() / 2;
-		int rhsHalfHeight = rhs->GetHeight() / 2;
-		int lhsCenterY = lhs->GetY() + lhsHalfHeight;
-		int rhsCenterY = rhs->GetY() + rhsHalfHeight;
-		int centerDeltaY = lhsCenterY - rhsCenterY;
+		float lhsHalfHeight = lhs->GetHeight() / 2;
+		float rhsHalfHeight = rhs->GetHeight() / 2;
+		float lhsCenterY = lhs->GetY() + lhsHalfHeight;
+		float rhsCenterY = rhs->GetY() + rhsHalfHeight;
+		float centerDeltaY = lhsCenterY - rhsCenterY;
 
 		// then check for overlap in y-axis
-		int halfHeight = (lhsHalfHeight + rhsHalfHeight);
+		float halfHeight = (lhsHalfHeight + rhsHalfHeight);
+
 		if (abs(centerDeltaY) < halfHeight)
 		{
-			int deltaX = halfWidth - abs(centerDeltaX);
-			int deltaY = halfHeight - abs(centerDeltaY);
+			float deltaX = halfWidth - abs(centerDeltaX);
+			float deltaY = halfHeight - abs(centerDeltaY);
 
 			// now we find the smallest of the two overlap in axis
 			if (deltaY < deltaX)
