@@ -6,6 +6,8 @@
 #include "State.h"
 
 class Entity;
+class RoomManager;
+class Room;
 
 class GameState : public State
 {
@@ -25,6 +27,8 @@ private:
 	std::vector<Entity*> m_entities;
 
 	bool m_active;
+	RoomManager* m_roomManager;
+	Room* m_room;
 };
 
 #endif // GAMESTATE_H_INCLUDED

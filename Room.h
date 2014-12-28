@@ -12,10 +12,12 @@ typedef std::vector<std::vector<tileMap>> TileMapVector;
 class Room
 {
 public:
-	Room(int width, int height);
+	Room(int width, int height, TileMapVector tileMap);
 	~Room();
 
-	TileMapVector* GetTilemap();
+	TileMapVector GetTilemap();
+	int GetWidth();
+	int GetHeight();
 
 private:
 	int m_width;

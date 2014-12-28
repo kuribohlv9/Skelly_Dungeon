@@ -1,17 +1,23 @@
 #pragma once
 
 class Room;
+class SpriteManager;
+class Sprite;
 
 class RoomManager
 {
 public:
-	RoomManager();
+	RoomManager(SpriteManager* spriteManager);
 	~RoomManager();
 
-	void CreateRoom(std::string filename);
+	Room* CreateRoom(std::string filename);
+	void AddSprite(std::string name, Sprite* sprite);
+	Sprite* GetSprite(std::string name);
 
 private:
 
-	std::vector<Room*> m_rooms;
+	std::map<std::string, Room*> m_rooms;
+	std::map<std::string, Sprite*> m_sprites;
+	SpriteManager* m_spriteManager;
 };
 

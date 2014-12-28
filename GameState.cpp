@@ -9,17 +9,21 @@
 #include "Sprite.h"
 #include "SpriteAnimation.h"
 #include "GameState.h"
+#include "RoomManager.h"
 
 #include "Heart.h"
 #include "Player.h"
 #include "Item.h"
 #include "Wall.h"
+#include "Room.h"
 
 #include "Collider.h"
 #include "CollisionManager.h"
 GameState::GameState(System& system)
 {
 	m_systems = system;
+
+	m_roomManager = new RoomManager(m_systems.sprite_manager);
 
 	//Load player sprite information
 	std::string filename = "../Skelly_Dungeon/assets/Player.txt";
@@ -49,10 +53,16 @@ GameState::GameState(System& system)
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("wall");
 
+	m_roomManager->AddSprite("wall", sprite);
+
 	Wall* wall = new Wall(sprite);
 
 	m_entities.push_back(wall);
 
+
+	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room1.txt");
+
+	m_room = room;
 	m_active = false;
 }
 
@@ -94,6 +104,17 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
+	for (int i = 0; i < m_room->GetWidth(); i++)
+	{
+		for (int j = 0; j < m_room->GetHeight(); j++)
+		{
+			if (m_room->GetTilemap()[i][j] == TILE_WALL)
+			{
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), i * 16, j * 16);
+			}
+		}
+	}
+
 	for (unsigned int i = m_entities.size()-1; i < -1; i--)
 	{
 		if (!m_entities[i]->IsVisible())
