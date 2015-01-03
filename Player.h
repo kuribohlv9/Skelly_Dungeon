@@ -17,7 +17,7 @@ public:
 	float GetY();
 	bool IsVisible();
 	EEntityType GetType();
-	void SetPosition(float x, float y);
+	void SetPosition(int x, int y);
 	float GetDirectionX();
 	float GetDirectionY();
 

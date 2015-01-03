@@ -67,7 +67,7 @@ void Player::Update(float deltatime)
 		direction = "right";
 	}
 	
-	if (m_keyboard->IsKeyDown(0))
+	else if (m_keyboard->IsKeyDown(0))
 	{
 		//Up
 		m_directionY -= 1;
@@ -150,7 +150,7 @@ EEntityType Player::GetType()
 	return ENTITY_PLAYER;
 }
 
-void Player::SetPosition(float x, float y)
+void Player::SetPosition(int x, int y)
 {
 	m_x = x;
 	m_y = y;
