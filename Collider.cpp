@@ -36,8 +36,8 @@ void Collider::SetPosition(float x, float y)
 
 void Collider::SetWidthHeight(int width, int height)
 {
-	m_area.w = width;
-	m_area.h = height;
+	m_area.w = width * 5;
+	m_area.h = height * 5;
 }
 
 int Collider::GetX()

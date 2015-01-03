@@ -55,7 +55,7 @@ GameState::GameState(System& system)
 
 	m_roomManager->AddSprite("wall", sprite);
 
-	Wall* wall = new Wall(sprite, 300, 300);
+	//Wall* wall = new Wall(sprite, 300, 300);
 	
 	filename = "../Skelly_Dungeon/assets/Ground.txt";
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
@@ -63,13 +63,13 @@ GameState::GameState(System& system)
 
 	m_roomManager->AddSprite("ground", sprite);
 
-	m_entities.push_back(wall);
+	//m_entities.push_back(wall);
 
 
 	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room1.txt");
 
 	m_room = room;
-	m_room->Load(m_entities, m_roomManager->GetSprite("wall"));
+	m_room->Load(m_entities, m_roomManager->GetSprite("wall"), m_systems.draw_manager->GetScale());
 	m_active = false;
 }
 
@@ -99,7 +99,7 @@ bool GameState::Update(float deltatime)
 
 		// update
 		m_entities[i]->Update(deltatime);
-		m_entities[i]->GetSprite()->Update(0.5f);
+		m_entities[i]->GetSprite()->Update(deltatime);
 	}
 
 	// we always do collision checking after updating 
@@ -111,17 +111,13 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
-	for (int i = 0; i < m_room->GetWidth(); i++)
+	for (int i = 0; i < m_room->GetHeight(); i++)
 	{
-		for (int j = 0; j < m_room->GetHeight(); j++)
+		for (int j = 0; j < m_room->GetWidth(); j++)
 		{
-			if (m_room->GetTilemap()[i][j] == TILE_WALL)
+			if (m_room->GetTilemap()[i][j] == TILE_GROUND)
 			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), i * 16, j * 16);
-			}
-			else if (m_room->GetTilemap()[i][j] == TILE_GROUND)
-			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), i * 16, j * 16);
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX(), i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY());
 
 			}
 		}
@@ -135,9 +131,14 @@ void GameState::Draw()
 		Sprite* sprite = m_entities[i]->GetSprite();
 		if (sprite)
 		{
-			m_systems.draw_manager->Draw(sprite,
-				m_entities[i]->GetX(),
-				m_entities[i]->GetY());
+			if (i != 0)
+			{
+				m_systems.draw_manager->Draw(sprite, m_entities[i]->GetX() - m_entities[0]->GetX(), m_entities[i]->GetY() - m_entities[0]->GetY());
+			}
+			else
+			{
+				m_systems.draw_manager->Draw(sprite, m_systems.width / 2 - m_entities[i]->GetSprite()->GetRegion()->w * 5 / 2, m_systems.height / 2 - m_entities[i]->GetSprite()->GetRegion()->h * 5 / 2);
+			}
 		}
 	}
 
@@ -172,7 +173,7 @@ void GameState::CollisionChecking()
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
 			{
 
-				player->SetPosition(player->GetX() - overlapX, player->GetY() - overlapY);
+				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
 				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}
 		}

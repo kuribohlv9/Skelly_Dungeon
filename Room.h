@@ -18,7 +18,7 @@ public:
 	Room(int width, int height, TileMapVector tileMap);
 	~Room();
 
-	void Load(std::vector<Entity*>& entities, Sprite* sprite);
+	void Load(std::vector<Entity*>& entities, Sprite* sprite, int scale);
 
 	TileMapVector GetTilemap();
 	int GetWidth();

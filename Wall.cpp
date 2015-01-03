@@ -8,10 +8,9 @@ Wall::Wall(Sprite* sprite, float x, float y)
 {
 	m_x = x;
 	m_y = y;
+	m_collider = new Collider(m_x, m_y);
 
 	m_sprite = sprite;
-	m_collider = new Collider(m_x, m_y);
-	m_collider->SetWidthHeight(m_sprite->GetRegion()->w, m_sprite->GetRegion()->h);
 	m_visible = true;
 }
 

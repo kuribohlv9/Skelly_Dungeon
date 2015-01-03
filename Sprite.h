@@ -7,7 +7,7 @@ class Sprite
 {
 public:
 	Sprite(SDL_Texture* texture);
-	~Sprite();
+	virtual ~Sprite();
 
 	SDL_Rect* GetRegion();
 	SDL_Texture* GetTexture();

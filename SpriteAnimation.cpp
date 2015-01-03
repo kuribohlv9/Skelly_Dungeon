@@ -21,7 +21,7 @@ void SpriteAnimation::Update(float deltatime)
 	if (itr != m_animations.end())
 	{
 		const AnimationFrameVector& ver = itr->second;
-		if (m_timer > ver[m_frame].m_duration)
+		if (m_timer > 1.0f/ver[m_frame].m_duration)
 		{
 			m_frame++;
 			m_frame = m_frame % ver.size();

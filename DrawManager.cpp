@@ -8,6 +8,8 @@ DrawManager::DrawManager()
 {
 	m_window = nullptr;
 	m_renderer = nullptr;
+
+	m_scale = 5;
 }
 
 DrawManager::~DrawManager()
@@ -33,7 +35,7 @@ bool DrawManager::Initialize(int width, int height)
 		return false;
 	}
 
-	SDL_RenderSetScale(m_renderer, 3.0f, 3.0f);
+	//SDL_RenderSetScale(m_renderer, 3.0f, 3.0f);
 	SDL_SetRenderDrawColor(m_renderer, 0x11, 0x12, 0x13, 0xff);
 
 	return true;
@@ -65,11 +67,16 @@ void DrawManager::Present()
 
 void DrawManager::Draw(Sprite* sprite, int x, int y)
 {
-	SDL_Rect dest = { x, y, sprite->GetRegion()->w, sprite->GetRegion()->h };
+	SDL_Rect dest = { x, y, sprite->GetRegion()->w*m_scale, sprite->GetRegion()->h*m_scale };
 	SDL_RenderCopy(m_renderer, sprite->GetTexture(), sprite->GetRegion(), &dest);
 }
 
 SDL_Renderer* DrawManager::GetRenderer()
 {
 	return m_renderer;
+}
+
+int DrawManager::GetScale()
+{
+	return m_scale;
 }

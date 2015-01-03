@@ -13,7 +13,7 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	m_y = 100.0f;
 
 	//Set the players initial speed
-	m_speed = 100.0f;
+	m_speed = 500.0f;
 
 	//Set Directions
 	m_directionX = 0.0f;
@@ -60,19 +60,20 @@ void Player::Update(float deltatime)
 		m_directionX -= 1;
 		direction = "left";
 	}
-	if (m_keyboard->IsKeyDown(3))
+	else if (m_keyboard->IsKeyDown(3))
 	{
 		//Right
 		m_directionX += 1;
 		direction = "right";
 	}
+	
 	if (m_keyboard->IsKeyDown(0))
 	{
 		//Up
 		m_directionY -= 1;
 		direction = "up";
 	}
-	if (m_keyboard->IsKeyDown(1))
+	else if (m_keyboard->IsKeyDown(1))
 	{
 		//Down
 		m_directionY += 1;
@@ -149,7 +150,7 @@ EEntityType Player::GetType()
 	return ENTITY_PLAYER;
 }
 
-void Player::SetPosition(int x, int y)
+void Player::SetPosition(float x, float y)
 {
 	m_x = x;
 	m_y = y;

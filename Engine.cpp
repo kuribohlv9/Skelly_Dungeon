@@ -149,6 +149,10 @@ void Engine::HandleEvents()
 			{
 				m_input_manager->SetKeyboard(4, true);
 			}
+			else if (key == SDLK_ESCAPE)
+			{
+				m_running = false;
+			}
 			break;
 		}
 		case SDL_KEYUP:
