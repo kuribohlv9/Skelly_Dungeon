@@ -111,13 +111,15 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
+	int BGoffsetX = 470;
+	int BGoffSetY = 320;
 	for (int i = 0; i < m_room->GetHeight(); i++)
 	{
 		for (int j = 0; j < m_room->GetWidth(); j++)
 		{
 			if (m_room->GetTilemap()[i][j] == TILE_GROUND)
 			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX(), i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY());
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
 
 			}
 		}
@@ -133,7 +135,7 @@ void GameState::Draw()
 		{
 			if (i != 0)
 			{
-				m_systems.draw_manager->Draw(sprite, m_entities[i]->GetX() - m_entities[0]->GetX(), m_entities[i]->GetY() - m_entities[0]->GetY());
+				m_systems.draw_manager->Draw(sprite, m_entities[i]->GetX() - m_entities[0]->GetX() + BGoffsetX, m_entities[i]->GetY() - m_entities[0]->GetY() + BGoffSetY);
 			}
 			else
 			{

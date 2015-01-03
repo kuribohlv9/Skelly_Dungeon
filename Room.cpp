@@ -25,7 +25,7 @@ void Room::Load(std::vector<Entity*>& entities, Sprite* sprite, int scale)
 			if (m_tilemap[i][j] == TILE_WALL)
 			{
 				Wall* wall = new Wall(sprite, j * 16 * scale, i * 16 * scale);
-				wall->GetCollider()->SetWidthHeight(wall->GetSprite()->GetRegion()->w * scale, wall->GetSprite()->GetRegion()->h * scale);
+				wall->GetCollider()->SetWidthHeight(wall->GetSprite()->GetRegion()->w, wall->GetSprite()->GetRegion()->h);
 				entities.push_back(wall);
 			}
 		}
