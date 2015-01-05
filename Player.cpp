@@ -80,13 +80,13 @@ void Player::Update(float deltatime)
 		direction = "down";
 	}
 
-	if (m_keyboard->IsKeyDown(4) && m_attacking == false)
+	if (m_keyboard->IsKeyDown(4))
 	{
 		
 		//Attacks in the direction the player is moving in
 		std::string attack = m_sprite->GetAnimationName() + "Attack";
 		m_sprite->SetAnimation(attack);
-		m_attacking = true;
+//		m_attacking = true;
 	}
 
 	if (direction != m_last_direction)
