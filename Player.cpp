@@ -33,6 +33,8 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	HeartCounter = 4;																				// sets starting HeartCounter to 4
 	m_attacking = false;
 	m_attackTimer = 0.0f;
+
+	m_state = STATE_NORMAL;
 }
 
 
@@ -47,6 +49,16 @@ Player::~Player()
 
 void Player::Update(float deltatime)
 {
+	//switch (m_state)
+	//{
+	//case STATE_NORMAL:
+	//	if (m_keyboard->IsKeyDown(4))
+	//	{
+	//		m_state = STATE_ATTACKING;
+	//	}
+	//	break;
+	//}
+
 	//Set the direction to zero so we won't speed up
 	m_directionX = 0;
 	m_directionY = 0;
@@ -66,7 +78,6 @@ void Player::Update(float deltatime)
 		m_directionX += 1;
 		direction = "right";
 	}
-	
 	else if (m_keyboard->IsKeyDown(0))
 	{
 		//Up

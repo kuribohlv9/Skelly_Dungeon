@@ -5,28 +5,34 @@
 #include "Sprite.h"
 
 
-Room::Room(int width, int height, TileMapVector tileMap)
+Room::Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber)
 {
+	m_name = name;
 	m_width = width;
 	m_height = height;
 	m_tilemap = tileMap;
+	m_doorNumber = doorNumber;
+
+	m_doors = doorVector;
 }
 
 Room::~Room()
 {
 }
 
-void Room::Load(std::vector<Entity*>& entities, Sprite* sprite, int scale)
+void Room::Load(int scale)
 {
+	m_wall_colliders = new std::vector<Collider*>;
+
 	for (int i = 0; i < m_height; i++)
 	{
 		for (int j = 0; j < m_width; j++)
 		{
 			if (m_tilemap[i][j] == TILE_WALL)
 			{
-				Wall* wall = new Wall(sprite, j * 16 * scale, i * 16 * scale);
-				wall->GetCollider()->SetWidthHeight(wall->GetSprite()->GetRegion()->w, wall->GetSprite()->GetRegion()->h);
-				entities.push_back(wall);
+				Collider* col = new Collider(j * 16 * scale, i * 16 * scale);
+				col->SetWidthHeight(16, 16);
+				m_wall_colliders->push_back(col);
 			}
 		}
 	}
@@ -44,4 +50,23 @@ int Room::GetWidth()
 int Room::GetHeight()
 {
 	return m_height;
+}
+
+std::vector<Collider*>* Room::GetCollider()
+{
+	return m_wall_colliders;
+}
+
+std::string Room::GetName()
+{
+	return m_name;
+}
+
+Door* Room::GetDoor(int number)
+{
+	return m_doors[number];
+}
+int Room::GetDoorNumber()
+{
+	return m_doorNumber;
 }

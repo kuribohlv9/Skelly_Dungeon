@@ -67,6 +67,12 @@ void Engine::Shutdown()
 		m_draw_manager = nullptr;
 	}
 
+	if (m_sprite_manager)
+	{
+		delete m_sprite_manager;
+		m_sprite_manager = nullptr;
+	}
+
 	SDL_Quit();
 }
 

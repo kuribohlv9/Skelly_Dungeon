@@ -3,6 +3,12 @@
 
 class Keyboard;
 
+enum PlayerState
+{
+	STATE_ATTACKING,
+	STATE_NORMAL
+};
+
 class Player : public Entity
 {
 public:
@@ -34,6 +40,8 @@ private:
 	bool m_visible;
 	bool m_attacking;																				// a variable to check if the player is attacking
 	std::string m_last_direction;
+
+	PlayerState m_state;
 
 	float HeartCounter;																				// holds the heart counter variable. Since it's private, we need a public function for changing it, accessible from GameState.cpp
 //	bool HasSword;																					// holds the HasSword variable.

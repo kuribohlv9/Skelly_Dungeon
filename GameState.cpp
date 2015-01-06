@@ -16,6 +16,7 @@
 #include "Item.h"
 #include "Wall.h"
 #include "Room.h"
+#include "Door.h"
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -43,6 +44,8 @@ GameState::GameState(System& system)
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("heart");
 
+	m_roomManager->AddSprite("heart", sprite);
+
 	//Create heart
 	Heart* heart = new Heart(sprite, 50, 50);																// makes a new heart with set a giving position of 200x300
 	m_entities.push_back(heart);																			// adds heart sprite to the vector
@@ -66,25 +69,21 @@ GameState::GameState(System& system)
 	//m_entities.push_back(wall);
 
 
-	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room1.txt");
+	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room.txt");
 
 	m_room = room;
-	m_room->Load(m_entities, m_roomManager->GetSprite("wall"), m_systems.draw_manager->GetScale());
+	m_room->Load(m_systems.draw_manager->GetScale());
+
 	m_active = false;
 }
 
 GameState::~GameState()
 {
-	int c = 0;
 	auto it = m_entities.begin();
 	while (it != m_entities.end())
 	{
-		Sprite* sprite = (*it)->GetSprite();
-		if (sprite)
-			m_systems.sprite_manager->DestroySprite(sprite);
 		delete (*it);
 		++it;
-		c++;
 	}
 	m_entities.clear();
 }
@@ -121,6 +120,14 @@ void GameState::Draw()
 			{
 				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
 
+			}
+			else if (m_room->GetTilemap()[i][j] == TILE_WALL)
+			{
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
+			}
+			else if (m_room->GetTilemap()[i][j] == TILE_DOOR)
+			{
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("heart"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
 			}
 		}
 	}
@@ -170,14 +177,33 @@ void GameState::CollisionChecking()
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
 			}
 		}
-		else if (m_entities[i]->GetType() == ENTITY_WALL)
+	}
+	std::vector<Collider*>* tempVector = m_room->GetCollider();
+	for (int i = 0; i < tempVector->size(); i++)
+	{
+		if (CollisionManager::Check((*tempVector)[i], player->GetCollider(), overlapX, overlapY))
 		{
-			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
-			{
-
-				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
-				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
-			}
+			player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
+			player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 		}
 	}
+	for (int i = 0; i < m_room->GetDoorNumber(); i++)
+	{
+		if (CollisionManager::Check(m_room->GetDoor(i)->GetCollider(), player->GetCollider(), overlapX, overlapY))
+		{
+			player->SetPosition(m_room->GetDoor(i)->GetDestinationX(), m_room->GetDoor(i)->GetDestinationY());
+			NextRoom(m_room->GetDoor(i)->GetDestinationName());
+		}
+
+	}
+	
+}
+
+void GameState::NextRoom(std::string name)
+{
+	delete m_room->GetCollider();
+
+	m_room = m_roomManager->GetRoom(name);
+
+	m_room->Load(m_systems.draw_manager->GetScale());
 }
