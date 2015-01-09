@@ -16,12 +16,10 @@
 #include "Item.h"
 #include "Wall.h"
 #include "Room.h"
-<<<<<<< HEAD
-#include "Skeleton.h"
+
 #include "Enemy.h"
-=======
+#include "Skeleton.h"
 #include "Door.h"
->>>>>>> origin/master
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -85,13 +83,9 @@ GameState::GameState(System& system)
 
 	//m_entities.push_back(wall);
 
-<<<<<<< HEAD
 	//Create room
-	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room1.txt");
-=======
 
 	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room.txt");
->>>>>>> origin/master
 
 	m_room = room;
 	m_room->Load(m_systems.draw_manager->GetScale());
@@ -216,7 +210,6 @@ void GameState::CollisionChecking()
 			player->SetPosition(m_room->GetDoor(i)->GetDestinationX(), m_room->GetDoor(i)->GetDestinationY());
 			NextRoom(m_room->GetDoor(i)->GetDestinationName());
 		}
-<<<<<<< HEAD
 		else if (m_entities[i]->GetType() == ENTITY_ENEMY)
 		{
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
@@ -225,9 +218,6 @@ void GameState::CollisionChecking()
 				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}
 		}
-=======
-
->>>>>>> origin/master
 	}
 	
 }
