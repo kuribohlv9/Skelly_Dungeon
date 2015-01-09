@@ -18,6 +18,7 @@ public:
 	bool Update(float deltatime);
 	void Draw();
 	State* NextState();
+	void NextRoom(std::string name);
 
 private:
 	void CollisionChecking();

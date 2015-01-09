@@ -1,0 +1,24 @@
+../Skelly_Dungeon/assets/Ambis-Castle.png
+room1 13 9
+3 room3 80 240 room3 160 240 room2 80 80
+w w w w w w d d w w w w w
+w g g g g g g g g g g g w
+w g g g g g g g g g g g w
+w g g g g g g g g g g g w
+w g g g g g g g g g g g d
+w g g g g g g g g g g g w
+w g g g g w g w g g g g w
+w g g g g w g w g g g g w
+w w w w w w u w w w w w w
+room2 4 3
+1 room1 880 320
+w w w w
+d g g w
+w w w w
+room3 4 5
+2 room1 480 80 room1 560 80
+w w w w
+w g g w
+w g g w
+w g g w
+w d d w

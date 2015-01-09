@@ -11,8 +11,8 @@ Heart::Heart(Sprite* sprite, float startX, float startY)
 {
 	m_sprite = sprite;
 	
-	m_x = startX;
-	m_y = startY;
+	m_x = startX * 5;
+	m_y = startY * 5;
 
 	//Initialize Collider
 	m_collider = new Collider(m_x, m_y);

@@ -13,6 +13,8 @@ public:
 	Room* CreateRoom(std::string filename);
 	void AddSprite(std::string name, Sprite* sprite);
 	Sprite* GetSprite(std::string name);
+	Room* GetRoom(std::string name);
+	
 
 private:
 
