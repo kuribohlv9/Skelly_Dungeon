@@ -16,6 +16,8 @@
 #include "Item.h"
 #include "Wall.h"
 #include "Room.h"
+#include "Skeleton.h"
+#include "Enemy.h"
 
 #include "Collider.h"
 #include "CollisionManager.h"
@@ -44,8 +46,20 @@ GameState::GameState(System& system)
 	sprite->SetAnimation("heart");
 
 	//Create heart
-	Heart* heart = new Heart(sprite, 50, 50);																// makes a new heart with set a giving position of 200x300
+	Heart* heart = new Heart(sprite, 50, 50);																// makes a new heart with set a giving position of 50x50
 	m_entities.push_back(heart);																			// adds heart sprite to the vector
+
+	//Load skeleton sprite information
+	filename = "../Skelly_Dungeon/assets/Skeleton.txt";
+
+	//Create skeleton sprite
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
+	sprite->SetAnimation("skeleton");
+
+	//Create skeleton!!
+	Skeleton* skeleton = new Skeleton(sprite, 400, 400);
+	m_entities.push_back(skeleton);
+
 
 	//Create wall sprite
 	filename = "../Skelly_Dungeon/assets/Wall.txt";
@@ -65,7 +79,7 @@ GameState::GameState(System& system)
 
 	//m_entities.push_back(wall);
 
-
+	//Create room
 	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room1.txt");
 
 	m_room = room;
@@ -175,6 +189,14 @@ void GameState::CollisionChecking()
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
 			{
 
+				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
+				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
+			}
+		}
+		else if (m_entities[i]->GetType() == ENTITY_ENEMY)
+		{
+			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
+			{
 				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
 				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}

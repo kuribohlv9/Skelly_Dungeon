@@ -10,7 +10,8 @@ enum EEntityType
 	ENTITY_HEART,
 	ENTITY_SWORD,
 	ENTITY_ITEM,
-	ENTITY_WALL
+	ENTITY_WALL,
+	ENTITY_ENEMY
 };
 
 class Sprite;

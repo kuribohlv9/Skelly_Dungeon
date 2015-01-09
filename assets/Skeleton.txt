@@ -1,0 +1,4 @@
+../Skelly_Dungeon/assets/zelda-sprites-enemies.png
+skeleton 2
+5 330 178 16 19
+5 330 208 16 19
