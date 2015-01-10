@@ -33,11 +33,13 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-	std::string derp = "../Skelly_Dungeon/assets/windmill.wav";
-	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(derp);
+	std::string soundfilename = "../Skelly_Dungeon/assets/windmill.wav";
+	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
 	clip->Play();
 
 	m_roomManager = new RoomManager(m_systems.sprite_manager);
+
+
 
 	//Load player sprite information
 	std::string filename = "../Skelly_Dungeon/assets/Player.txt";
@@ -176,6 +178,15 @@ void GameState::Draw()
 			}
 		}
 	}
+
+}
+
+void GameState::DrawGUI()
+{
+
+//Here will be code to draw the gui, using GetRenderer() and rectangles
+
+	// use a for-loop for the hearts, draw only WHOLE hearts for now. Draw them from the sprite sheet.
 
 }
 
