@@ -59,13 +59,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../external/SDL2_image-2.0.0/include;../external/sdl2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../external/SDL2_image-2.0.0/include;../external/sdl2/include;../external/SDL2_mixer-2.0.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../external/SDL2_image-2.0.0/lib/x86;../external/sdl2/lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../external/SDL2_image-2.0.0/lib/x86;../external/sdl2/lib/x86/;../external/SDL2_mixer-2.0.0/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -106,10 +106,13 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MusicClip.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="Skeleton.h" />
+    <ClInclude Include="SoundClip.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="SpriteManager.h" />
@@ -131,10 +134,13 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="MusicClip.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="Skeleton.cpp" />
+    <ClCompile Include="SoundClip.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="SpriteManager.cpp" />

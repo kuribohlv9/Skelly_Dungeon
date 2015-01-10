@@ -10,6 +10,8 @@
 #include "SpriteAnimation.h"
 #include "GameState.h"
 #include "RoomManager.h"
+#include "SoundManager.h"
+#include "SoundClip.h"
 
 #include "Heart.h"
 #include "Player.h"
@@ -23,9 +25,17 @@
 
 #include "Collider.h"
 #include "CollisionManager.h"
+#include "SoundManager.h"
+#include "SoundClip.h"
+#include "MusicClip.h"
+
 GameState::GameState(System& system)
 {
 	m_systems = system;
+
+	std::string derp = "../assets/windmill.wav";
+	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(derp);
+	clip->Play();
 
 	m_roomManager = new RoomManager(m_systems.sprite_manager);
 

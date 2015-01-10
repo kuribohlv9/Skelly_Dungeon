@@ -8,6 +8,7 @@ class DrawManager;
 class InputManager;
 class StateManager;
 class SpriteManager;
+class SoundManager;
 
 class Engine
 {
@@ -28,6 +29,8 @@ private:
 	InputManager* m_input_manager;
 	SpriteManager* m_sprite_manager;
 	StateManager* m_state_manager;
+	SoundManager* m_sound_manager;
+
 };
 
 #endif // ENGINE_H_INCLUDED
