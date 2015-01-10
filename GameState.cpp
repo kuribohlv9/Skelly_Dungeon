@@ -33,7 +33,7 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-	std::string derp = "../assets/windmill.wav";
+	std::string derp = "../Skelly_Dungeon/assets/windmill.wav";
 	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(derp);
 	clip->Play();
 
