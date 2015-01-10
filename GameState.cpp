@@ -138,25 +138,8 @@ void GameState::Draw()
 {
 	int BGoffsetX = 470;
 	int BGoffSetY = 320;
-	for (int i = 0; i < m_room->GetHeight(); i++)
-	{
-		for (int j = 0; j < m_room->GetWidth(); j++)
-		{
-			if (m_room->GetTilemap()[i][j] == TILE_GROUND)
-			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
 
-			}
-			else if (m_room->GetTilemap()[i][j] == TILE_WALL)
-			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
-			}
-			else if (m_room->GetTilemap()[i][j] == TILE_DOOR)
-			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("heart"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
-			}
-		}
-	}
+	DrawBackground(BGoffsetX, BGoffSetY);
 
 	for (unsigned int i = m_entities.size()-1; i < -1; i--)
 	{
@@ -179,6 +162,30 @@ void GameState::Draw()
 
 }
 
+void GameState::DrawBackground(int BGoffsetX, int BGoffSetY)
+{
+	
+
+	for (int i = 0; i < m_room->GetHeight(); i++)
+	{
+		for (int j = 0; j < m_room->GetWidth(); j++)
+		{
+			if (m_room->GetTilemap()[i][j] == TILE_GROUND)
+			{
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
+
+			}
+			else if (m_room->GetTilemap()[i][j] == TILE_WALL)
+			{
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
+			}
+			else if (m_room->GetTilemap()[i][j] == TILE_DOOR)
+			{
+				//m_systems.draw_manager->Draw(m_roomManager->GetSprite("heart"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
+			}
+		}
+	}
+}
 State* GameState::NextState()
 {
 	return nullptr;
@@ -203,6 +210,18 @@ void GameState::CollisionChecking()
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
 			}
 		}
+		else if (m_entities[i]->GetType() == ENTITY_ENEMY)
+		{
+			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
+			{
+				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
+				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
+			}
+			if (player->GetState() == STATE_ATTACKING || CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
+			{
+				m_entities.erase(m_entities.begin() + i);
+			}
+		}
 	}
 	std::vector<Collider*>* tempVector = m_room->GetCollider();
 	for (int i = 0; i < tempVector->size(); i++)
@@ -220,16 +239,7 @@ void GameState::CollisionChecking()
 			player->SetPosition(m_room->GetDoor(i)->GetDestinationX(), m_room->GetDoor(i)->GetDestinationY());
 			NextRoom(m_room->GetDoor(i)->GetDestinationName());
 		}
-		else if (m_entities[i]->GetType() == ENTITY_ENEMY)
-		{
-			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
-			{
-				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
-				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
-			}
-		}
 	}
-	
 }
 
 void GameState::NextRoom(std::string name)
