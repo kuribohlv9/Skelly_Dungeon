@@ -19,6 +19,8 @@ public:
 	void Draw();
 	State* NextState();
 	void NextRoom(std::string name);
+	void DrawGUI();
+	void DrawBackground(int BGoffsetX, int BGoffsetY);
 
 private:
 	void CollisionChecking();

@@ -15,10 +15,6 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	//Set the players initial speed
 	m_speed = 500.0f;
 
-	//Set Directions
-	m_directionX = 0.0f;
-	m_directionY = 0.0f;
-
 	//Set sprite and keyboard
 	m_sprite = sprite;
 	m_keyboard = keyboard;
@@ -26,6 +22,9 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	//Initialize Collider
 	m_collider = new Collider(0, 0);
 	m_collider->SetWidthHeight(m_sprite->GetRegion()->w, m_sprite->GetRegion()->h);
+
+	//We create this now and set it's position when we attack
+	m_swordCollider = new Collider(0, 0);
 
 	//Set visible
 	m_visible = true;
@@ -45,85 +44,126 @@ Player::~Player()
 		delete m_collider;
 		m_collider = nullptr;
 	}
+	if (m_swordCollider)
+	{
+		delete m_swordCollider;
+		m_swordCollider = nullptr;
+	}
 }
 
 void Player::Update(float deltatime)
 {
-	//switch (m_state)
-	//{
-	//case STATE_NORMAL:
-	//	if (m_keyboard->IsKeyDown(4))
-	//	{
-	//		m_state = STATE_ATTACKING;
-	//	}
-	//	break;
-	//}
-
-	//Set the direction to zero so we won't speed up
-	m_directionX = 0;
-	m_directionY = 0;
-
-	//Look at what keys are down and add to that direction
-	std::string direction;
-
-	if (m_keyboard->IsKeyDown(2))
+	switch (m_state)
 	{
-		//Left
-		m_directionX -= 1;
-		direction = "left";
-	}
-	else if (m_keyboard->IsKeyDown(3))
+	case STATE_NORMAL:
 	{
-		//Right
-		m_directionX += 1;
-		direction = "right";
+		//Set the direction to zero so we won't speed up
+		float directionX = 0;
+		float directionY = 0;
+
+		//Look at what keys are down and add to that direction
+		if (m_keyboard->IsKeyDown(2))
+		{
+			//Left
+			directionX -= 1;
+			m_direction = "left";
+		}
+		else if (m_keyboard->IsKeyDown(3))
+		{
+			//Right
+			directionX += 1;
+			m_direction = "right";
+		}
+		else if (m_keyboard->IsKeyDown(0))
+		{
+			//Up
+			directionY -= 1;
+			m_direction = "up";
+		}
+		else if (m_keyboard->IsKeyDown(1))
+		{
+			//Down
+			directionY += 1;
+			m_direction = "down";
+		}
+
+		if (m_keyboard->IsKeyDown(4))
+		{
+			if (m_direction == "left")
+			{
+				m_swordCollider->SetPosition(m_x - 11*5, m_y +7.5*5 -1.5*5);
+				m_swordCollider->SetWidthHeight(11, 3);
+			}
+			else if (m_direction == "right")
+			{
+				m_swordCollider->SetPosition(m_x + 16 * 5, m_y + 7.5 * 5 - 1.5 * 5);
+				m_swordCollider->SetWidthHeight(11, 3);
+			}
+			else if (m_direction == "up")
+			{
+				m_swordCollider->SetPosition(m_x+ 8*5 - 1.5 *5, m_y);
+				m_swordCollider->SetWidthHeight(3, 11);
+			}
+			else if (m_direction == "down")
+			{
+				m_swordCollider->SetPosition(m_x + 8*5 - 1.5 * 5, m_y + 16*5);
+				m_swordCollider->SetWidthHeight(3, 11);
+			}
+
+			//Attacks in the direction the player is moving in
+			std::string attack = m_direction + "Attack";
+
+			//sends the player into attacking state;
+			m_sprite->SetAnimation(attack);
+			m_state = STATE_ATTACKING;
+			m_attackTimer = 0;
+			break;
+		}
+
+		if (directionX == 0 && directionY == 0)
+		{
+			//This stops the sprite from animating
+			m_sprite->SetAnimation("Nope");
+		}
+		if (m_direction != m_last_direction)
+		{
+			//Stops the sprite's animation from restarting unless they change direction
+			m_sprite->SetAnimation(m_direction);
+			m_last_direction = m_direction;
+		}
+
+		//Normalize the direction so diagonal movement is at normal speed
+		float lenght = sqrt(directionX * directionX + directionY * directionY);
+
+		//if not division by zero
+		if (lenght != 0.0f)
+		{
+			//Normalize
+			directionX /= lenght;
+			directionY /= lenght;
+		}
+
+		//Change the players position in X and Y based on the direction, speed and deltatime
+		m_x += (directionX * m_speed * deltatime);
+		m_y += (directionY * m_speed * deltatime);
+
+		//Update the collider
+		m_collider->SetPosition(m_x, m_y);
+		break;
 	}
-	else if (m_keyboard->IsKeyDown(0))
+
+	case STATE_ATTACKING:
 	{
-		//Up
-		m_directionY -= 1;
-		direction = "up";
-	}
-	else if (m_keyboard->IsKeyDown(1))
-	{
-		//Down
-		m_directionY += 1;
-		direction = "down";
+		m_attackTimer += deltatime;
+		if (m_attackTimer > 0.25f)
+		{
+			m_state = STATE_NORMAL;
+			m_sprite->SetAnimation(m_last_direction);
+		}
+		break;
 	}
 
-	if (m_keyboard->IsKeyDown(4))
-	{
-		
-		//Attacks in the direction the player is moving in
-		std::string attack = m_sprite->GetAnimationName() + "Attack";
-		m_sprite->SetAnimation(attack);
-//		m_attacking = true;
 	}
-
-	if (direction != m_last_direction)
-	{
-		m_sprite->SetAnimation(direction);
-		m_last_direction = direction;
-	}
-
-	//Normalize the direction so diagonal movement is at normal speed
-	float lenght = sqrt(m_directionX * m_directionX + m_directionY * m_directionY);
-
-	//if not division by zero
-	if (lenght != 0.0f)
-	{
-		//Normalize
-		m_directionX /= lenght;
-		m_directionY /= lenght;
-	}
-
-	//Change the players position in X and Y based on the direction, speed and deltatime
-	m_x += (m_directionX * m_speed * deltatime);
-	m_y += (m_directionY * m_speed * deltatime);
-
-	//Update the collider
-	m_collider->SetPosition(m_x, m_y);
-
 }
 
 Sprite* Player::GetSprite()
@@ -139,6 +179,11 @@ SpriteAnimation* Player::GetAniSprite()
 Collider* Player::GetCollider()
 {
 	return m_collider;
+}
+
+Collider* Player::GetSwordCollider()
+{
+	return m_swordCollider;
 }
 
 float Player::GetX()
@@ -172,11 +217,7 @@ void Player::SetHearts(int change)
 	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
 }
 
-float Player::GetDirectionX()
+PlayerState Player::GetState()
 {
-	return m_directionX;
-}
-float Player::GetDirectionY()
-{
-	return m_directionY;
+	return m_state;
 }
