@@ -22,8 +22,9 @@ Room::~Room()
 
 void Room::Load(int scale)
 {
-	m_wall_colliders = new std::vector<Collider*>;
-
+	//As long as the room is not loaded the walls doesn't have colliders. This was an attempt at optimization which might be uneccessary
+	//When rooms are switched in gamestate, the colliders are deleted
+	m_wall_colliders = new std::vector < Collider* > ;
 	for (int i = 0; i < m_height; i++)
 	{
 		for (int j = 0; j < m_width; j++)
@@ -36,6 +37,10 @@ void Room::Load(int scale)
 			}
 		}
 	}
+
+	//WARNING WARNING
+	//Discovered that walls colliders are NOT DELETED wtf. This need fixing in some way. Optimization fail
+	//WARNING WARNING
 }
 
 TileMapVector Room::GetTilemap()
