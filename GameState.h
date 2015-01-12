@@ -8,6 +8,7 @@
 class Entity;
 class RoomManager;
 class Room;
+class SoundClip;
 
 class GameState : public State
 {
@@ -21,6 +22,7 @@ public:
 	void NextRoom(std::string name);
 	void DrawGUI();
 	void DrawBackground(int BGoffsetX, int BGoffsetY);
+	SoundClip* GetSoundClip(std::string name);
 
 private:
 	void CollisionChecking();
@@ -28,10 +30,13 @@ private:
 private:
 	System m_systems;
 	std::vector<Entity*> m_entities;
+	std::vector<SpriteAnimation*> m_GUIVector;
+	std::map<std::string, SoundClip*> m_sounds;
 
 	bool m_active;
 	RoomManager* m_roomManager;
 	Room* m_room;
+
 };
 
 #endif // GAMESTATE_H_INCLUDED

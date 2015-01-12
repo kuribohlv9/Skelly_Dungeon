@@ -14,7 +14,7 @@ public:
 	bool Initialize();
 	void Shutdown();
 	MusicClip *CreateMusicClip(std::string p_sFilename);
-	SoundClip *CreateSoundClip(const std::string &p_sFilename);
+	SoundClip *CreateSoundClip(std::string p_sFilename);
 private:
 	std::map<std::string, Mix_Music*> m_axMusic;
 	std::map<std::string, Mix_Chunk*> m_axSounds;

@@ -2,6 +2,7 @@
 #include "Entity.h"
 
 class Keyboard;
+class SoundClip;
 
 enum PlayerState
 {
@@ -13,7 +14,7 @@ enum PlayerState
 class Player : public Entity
 {
 public:
-	Player(Keyboard* keyboard, SpriteAnimation* sprite);
+	Player(Keyboard* keyboard, SpriteAnimation* sprite, SoundClip* sClip);
 	~Player();
 
 	void Update(float deltatime);
@@ -29,6 +30,7 @@ public:
 	PlayerState GetState();
 
 	void SetHearts(int change);																		// a public function for changing the heart counter, HeartCounter, a protected variable
+	int GetHearts();																				// a public function for getting the HeartCounter in GameState
 //	void SetSword(bool change);
 
 private:
@@ -43,12 +45,13 @@ private:
 
 	PlayerState m_state;
 
-	float HeartCounter;																				// holds the heart counter variable. Since it's private, we need a public function for changing it, accessible from GameState.cpp
+	int HeartCounter;																				// holds the heart counter variable. Since it's private, we need a public function for changing it, accessible from GameState.cpp
 //	bool HasSword;																					// holds the HasSword variable.
 
 	Collider* m_collider;
 	SpriteAnimation* m_sprite;
 	Keyboard* m_keyboard;
 	Collider* m_swordCollider;
+	SoundClip* m_soundClip;
 };
 

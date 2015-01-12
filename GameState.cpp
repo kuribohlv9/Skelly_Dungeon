@@ -10,8 +10,6 @@
 #include "SpriteAnimation.h"
 #include "GameState.h"
 #include "RoomManager.h"
-#include "SoundManager.h"
-#include "SoundClip.h"
 
 #include "Heart.h"
 #include "Player.h"
@@ -33,9 +31,17 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-	std::string soundfilename = "../Skelly_Dungeon/assets/windmill.wav";
-	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
-	clip->Play();
+
+	std::string soundfilename = "../Skelly_Dungeon/assets/windmillTEMP.wav";
+	MusicClip* mClip = m_systems.sound_manager->CreateMusicClip(soundfilename);
+	mClip->Play();
+
+	
+	std::string swordSound = "../Skelly_Dungeon/assets/LOZ_Sword.wav";
+	SoundClip* sClip = m_systems.sound_manager->CreateSoundClip(swordSound);
+	
+
+	//SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
 
 	m_roomManager = new RoomManager(m_systems.sprite_manager);
 
@@ -49,7 +55,7 @@ GameState::GameState(System& system)
 	sprite->SetAnimation("down");
 
 	//Create player
-	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite);
+	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite, sClip);
 	m_entities.push_back(player);
 
 	//Load Hearts sprite information
@@ -103,6 +109,12 @@ GameState::GameState(System& system)
 	m_room->Load(m_systems.draw_manager->GetScale());
 
 	m_active = false;
+
+	// Creates a vector for gui sprites
+
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/guiheart.txt");
+	sprite->SetAnimation("guiheart");
+	m_GUIVector.push_back(sprite);
 }
 
 GameState::~GameState()
@@ -161,15 +173,20 @@ void GameState::Draw()
 			}
 		}
 	}
-
+	
+	DrawGUI();																								// Runs the DrawGUI() function
 }
 
 void GameState::DrawGUI()
-{
-
 //Here will be code to draw the gui, using GetRenderer() and rectangles
+{
+	Player* player = static_cast<Player*>(m_entities[0]);													// Static casts the first element in m_entities, which is always player, to a pointer so we can access the Player class's functions ( GetHearts() )
 
-	// use a for-loop for the hearts, draw only WHOLE hearts for now. Draw them from the sprite sheet.
+	for (unsigned int i = 0; i < player->GetHearts(); i++)
+	{
+		m_systems.draw_manager->Draw(m_GUIVector[0], 500+i*80, 30);
+
+	}
 
 }
 
@@ -220,6 +237,10 @@ void GameState::CollisionChecking()
 			{
 				Item* item = dynamic_cast<Item*>(m_entities[i]);								// we dynamic cast the abstract class Item as class Entity so that we can access Entity's collider
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
+				std::string soundfilename = "../Skelly_Dungeon/assets/LOZ_Get_Heart.wav";
+				SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
+				clip->Play();
+				m_entities.erase(m_entities.begin() + i);
 			}
 		}
 		else if (m_entities[i]->GetType() == ENTITY_ENEMY)
@@ -231,6 +252,9 @@ void GameState::CollisionChecking()
 			}
 			if (player->GetState() == STATE_ATTACKING || CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
 			{
+				std::string soundfilename = "../Skelly_Dungeon/assets/LOZ_Hit.wav";
+				SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
+				clip->Play();
 				m_entities.erase(m_entities.begin() + i);
 			}
 		}
@@ -261,4 +285,10 @@ void GameState::NextRoom(std::string name)
 	m_room = m_roomManager->GetRoom(name);
 
 	m_room->Load(m_systems.draw_manager->GetScale());
+}
+
+SoundClip* GameState::GetSoundClip(std::string name)
+{
+	auto itr = m_sounds.find(name);
+	return itr->second;
 }

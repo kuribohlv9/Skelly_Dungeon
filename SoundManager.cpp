@@ -85,7 +85,7 @@ MusicClip *SoundManager::CreateMusicClip(std::string p_sFilename)
 	return Ret;
 }
 
-SoundClip *SoundManager::CreateSoundClip(const std::string &p_sFilename)
+SoundClip *SoundManager::CreateSoundClip(std::string p_sFilename)
 {
 	SoundClip *Ret = nullptr;
 

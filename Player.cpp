@@ -4,9 +4,10 @@
 #include "Sprite.h"
 #include "Keyboard.h"
 #include "SpriteAnimation.h"
+#include "SoundClip.h"
 
 
-Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
+Player::Player(Keyboard* keyboard, SpriteAnimation* sprite, SoundClip* sClip)
 {
 	//Starting point
 	m_x = 100.0f;
@@ -34,6 +35,8 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite)
 	m_attackTimer = 0.0f;
 
 	m_state = STATE_NORMAL;
+
+	m_soundClip = sClip;
 }
 
 
@@ -115,8 +118,10 @@ void Player::Update(float deltatime)
 
 			//sends the player into attacking state;
 			m_sprite->SetAnimation(attack);
+			
 			m_state = STATE_ATTACKING;
 			m_attackTimer = 0;
+			m_soundClip->Play();
 			break;
 		}
 
@@ -215,6 +220,11 @@ void Player::SetPosition(int x, int y)
 void Player::SetHearts(int change)
 {
 	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
+}
+
+int Player::GetHearts()
+{
+	return HeartCounter;
 }
 
 PlayerState Player::GetState()
