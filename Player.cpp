@@ -11,7 +11,7 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite, SoundClip* sClip)
 {
 	//Starting point
 	m_x = 100.0f;
-	m_y = 100.0f;
+	m_y = 200.0f;
 
 	//Set the players initial speed
 	m_speed = 500.0f;
@@ -104,7 +104,7 @@ void Player::Update(float deltatime)
 			}
 			else if (m_direction == "up")
 			{
-				m_swordCollider->SetPosition(m_x+ 8*5 - 1.5 *5, m_y);
+				m_swordCollider->SetPosition(m_x+ 8*5 - 1.5 *5, m_y - 10*5);
 				m_swordCollider->SetWidthHeight(3, 11);
 			}
 			else if (m_direction == "down")

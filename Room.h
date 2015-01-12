@@ -5,6 +5,7 @@ enum tileMap
 	TILE_WALL,
 	TILE_GROUND,
 	TILE_DOOR,
+	TILE_ENEMY,
 	TILE_UNKNOWN
 };
 
@@ -12,14 +13,16 @@ typedef std::vector<std::vector<tileMap>> TileMapVector;
 
 class Collider;
 class Door;
+class Entity;
+class SpriteAnimation;
 
 class Room
 {
 public:
-	Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber);
+	Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber, std::vector<Collider*>* wallColliders);
 	~Room();
 
-	void Load(int scale);
+	std::vector<Entity*> Load(int scale, SpriteAnimation* skeletonSprite);
 
 	TileMapVector GetTilemap();
 	int GetWidth();

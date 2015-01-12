@@ -43,7 +43,7 @@ GameState::GameState(System& system)
 
 	//SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
 
-	m_roomManager = new RoomManager(m_systems.sprite_manager);
+	m_roomManager = new RoomManager();
 
 
 
@@ -82,6 +82,8 @@ GameState::GameState(System& system)
 	Skeleton* skeleton = new Skeleton(sprite, 400, 400);
 	m_entities.push_back(skeleton);
 
+	m_roomManager->AddSprite("Skelly", sprite);
+
 
 	//Create wall sprite
 	filename = "../Skelly_Dungeon/assets/Wall.txt";
@@ -106,7 +108,7 @@ GameState::GameState(System& system)
 	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room.txt");
 
 	m_room = room;
-	m_room->Load(m_systems.draw_manager->GetScale());
+	NextRoom("room1");
 
 	m_active = false;
 
@@ -126,6 +128,9 @@ GameState::~GameState()
 		++it;
 	}
 	m_entities.clear();
+
+	delete m_roomManager;
+	m_roomManager = nullptr;
 }
 
 bool GameState::Update(float deltatime)
@@ -198,7 +203,7 @@ void GameState::DrawBackground(int BGoffsetX, int BGoffSetY)
 	{
 		for (int j = 0; j < m_room->GetWidth(); j++)
 		{
-			if (m_room->GetTilemap()[i][j] == TILE_GROUND)
+			if (m_room->GetTilemap()[i][j] == TILE_GROUND || m_room->GetTilemap()[i][j] == TILE_ENEMY)
 			{
 				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
 
@@ -250,7 +255,7 @@ void GameState::CollisionChecking()
 				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
 				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}
-			if (player->GetState() == STATE_ATTACKING || CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
+			if (player->GetState() == STATE_ATTACKING && CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
 			{
 				std::string soundfilename = "../Skelly_Dungeon/assets/LOZ_Hit.wav";
 				SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
@@ -280,11 +285,28 @@ void GameState::CollisionChecking()
 
 void GameState::NextRoom(std::string name)
 {
-	delete m_room->GetCollider();
+
+	//deallocate everything in the old room
+	auto it = m_entities.begin();
+	it++;
+	while (it != m_entities.end())
+	{
+		delete *it;
+		it++;
+	}
+
+	m_entities.erase(m_entities.begin() + 1, m_entities.end());
 
 	m_room = m_roomManager->GetRoom(name);
 
-	m_room->Load(m_systems.draw_manager->GetScale());
+	std::vector<Entity*> tempVector = m_room->Load(m_systems.draw_manager->GetScale(), m_roomManager->GetSprite("Skelly"));
+
+	auto itr = tempVector.begin();
+	while (itr != tempVector.end())
+	{
+		m_entities.push_back(*itr);
+		itr++;
+	}
 }
 
 SoundClip* GameState::GetSoundClip(std::string name)

@@ -20,6 +20,8 @@ Door::Door(float x, float y, std::string roomName, std::string destinationName, 
 
 Door::~Door()
 {
+	delete m_collider;
+	m_collider = nullptr;
 }
 
 Collider* Door::GetCollider()

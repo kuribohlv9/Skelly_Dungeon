@@ -2,10 +2,10 @@
 #include "Room.h"
 #include "Wall.h"
 #include "Collider.h"
-#include "Sprite.h"
+#include "Skeleton.h"
 
 
-Room::Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber)
+Room::Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber, std::vector<Collider*>* wallColliders)
 {
 	m_name = name;
 	m_width = width;
@@ -14,33 +14,46 @@ Room::Room(std::string name, int width, int height, TileMapVector tileMap, std::
 	m_doorNumber = doorNumber;
 
 	m_doors = doorVector;
+	m_wall_colliders = wallColliders;
 }
 
 Room::~Room()
 {
+	auto it = m_wall_colliders->begin();
+
+	while (it != m_wall_colliders->end())
+	{
+		delete *it;
+		*it = nullptr;
+		it++;
+	}
+	m_wall_colliders->clear();
+
+	auto itr = m_doors.begin();
+	while (itr != m_doors.end())
+	{
+		delete *itr;
+		*itr = nullptr;
+		itr++;
+	}
 }
 
-void Room::Load(int scale)
+std::vector<Entity*> Room::Load(int scale, SpriteAnimation* skeletonSprite)
 {
-	//As long as the room is not loaded the walls doesn't have colliders. This was an attempt at optimization which might be uneccessary
-	//When rooms are switched in gamestate, the colliders are deleted
-	m_wall_colliders = new std::vector < Collider* > ;
+
+	std::vector<Entity*> tempVector;
 	for (int i = 0; i < m_height; i++)
 	{
 		for (int j = 0; j < m_width; j++)
 		{
-			if (m_tilemap[i][j] == TILE_WALL)
+			if (m_tilemap[i][j] == TILE_ENEMY)
 			{
-				Collider* col = new Collider(j * 16 * scale, i * 16 * scale);
-				col->SetWidthHeight(16, 16);
-				m_wall_colliders->push_back(col);
+				Skeleton* skelly = new Skeleton(skeletonSprite, j * 16.0f * scale, i * 16.0f * scale);
+				tempVector.push_back(skelly);
 			}
 		}
 	}
-
-	//WARNING WARNING
-	//Discovered that walls colliders are NOT DELETED wtf. This need fixing in some way. Optimization fail
-	//WARNING WARNING
+	return tempVector;
 }
 
 TileMapVector Room::GetTilemap()

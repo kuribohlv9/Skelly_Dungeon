@@ -75,6 +75,7 @@ MusicClip *SoundManager::CreateMusicClip(std::string p_sFilename)
 		Mix_Music *Music = Mix_LoadMUS(p_sFilename.c_str());
 		std::pair<std::string, Mix_Music*> Pair;
 		Pair = std::make_pair(p_sFilename, Music);
+		m_axMusic.insert(Pair);
 		Ret = new MusicClip(Music);
 	}
 	else
@@ -97,6 +98,7 @@ SoundClip *SoundManager::CreateSoundClip(std::string p_sFilename)
 		std::string derp = SDL_GetError();
 		std::pair<std::string, Mix_Chunk*> Pair;
 		Pair = std::make_pair(p_sFilename, Sound);
+		m_axSounds.insert(Pair);
 		Ret = new SoundClip(Sound);
 	}
 	else

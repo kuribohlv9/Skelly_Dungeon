@@ -2,15 +2,15 @@
 room1 14 11
 4 room3 80 240 room3 160 240 room2 80 80 room4 160 80
 u u u u u u d d u u u u u u
-w w w w w w g g w w w w w u
-w g g g g g g g g g g g w u
-w g g g g g g g g g g g w u
-w g g g g g g g g g g g w u
-w g g g g g g g g g g g g d
+w w w w w w e e w w w w w u
+w e e e e e e e e e e e w u
+w g g g g g g g g g e e w u
+w g g g g g g g g g e e w u
+w g g g g g g g e g g g g d
 w g g g g g g g g g g g w u
 w g g g g w g w g g g g w u
 w g g g g w g w g g g g w u
-w w w w w w g w w w w w w u
+w w w w w w e w w w w w w u
 u u u u u u d u u u u u u u
 room2 4 3
 1 room1 960 400

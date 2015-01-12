@@ -3,11 +3,12 @@
 #include "SpriteManager.h"
 #include "Room.h"
 #include "Door.h"
+#include "Collider.h"
 
 
-RoomManager::RoomManager(SpriteManager* spriteManager)
+RoomManager::RoomManager()
 {
-	m_spriteManager = spriteManager;
+
 }
 
 
@@ -19,6 +20,7 @@ RoomManager::~RoomManager()
 	{
 		delete itr->second;
 		itr->second = nullptr;
+		itr++;
 	}
 }
 
@@ -86,6 +88,8 @@ Room* RoomManager::CreateRoom(std::string filename)
 			DoorNumber = 0;
 			std::vector<Door*> doorVector;
 
+			std::vector<Collider*>* colliderVector = new std::vector<Collider*>;
+
 			for (int i = 0; i < height; i++)
 			{
 				//First we create a vector
@@ -97,6 +101,9 @@ Room* RoomManager::CreateRoom(std::string filename)
 					if (chiffer == 'w')
 					{
 						temp.push_back(TILE_WALL);
+						Collider* col = new Collider(j * 16 * 5, i * 16 * 5);
+						col->SetWidthHeight(16, 16);
+						colliderVector->push_back(col);
 					}
 					else if (chiffer == 'g')
 					{
@@ -111,6 +118,10 @@ Room* RoomManager::CreateRoom(std::string filename)
 						doorVector.push_back(door);
 						DoorNumber++;
 					}
+					else if (chiffer == 'e')
+					{
+						temp.push_back(TILE_ENEMY);
+					}
 					else
 					{
 						temp.push_back(TILE_UNKNOWN);
@@ -120,7 +131,7 @@ Room* RoomManager::CreateRoom(std::string filename)
 				tileMapVector.push_back(temp);
 			}
 			//The room is then created and assigned with all the neccessary information
-			Room* room = new Room(name, width, height, tileMapVector, doorVector, DoorNumber);
+			Room* room = new Room(name, width, height, tileMapVector, doorVector, DoorNumber, colliderVector);
 
 			//m_rooms keeps a track of every room created and their names, this way it can be deleted and fetched with ease
 			m_rooms.insert(std::pair<std::string, Room*>(name, room));
@@ -133,18 +144,18 @@ Room* RoomManager::CreateRoom(std::string filename)
 	return itr->second;
 }
 
-void RoomManager::AddSprite(std::string name, Sprite* sprite)
+void RoomManager::AddSprite(std::string name, SpriteAnimation* sprite)
 {
 	//Roommanager also has a sprite vector, but it doesn't need deleting since they are destroyed in spritemanager
 	auto itr = m_sprites.find(name);
 	if (itr == m_sprites.end())
 	{
-		m_sprites.insert(std::pair<std::string, Sprite*>(name, sprite));
+		m_sprites.insert(std::pair<std::string, SpriteAnimation*>(name, sprite));
 		itr = m_sprites.find(name);
 	}
 }
 
-Sprite* RoomManager::GetSprite(std::string name)
+SpriteAnimation* RoomManager::GetSprite(std::string name)
 {
 	auto itr = m_sprites.find(name);
 	return itr->second;
