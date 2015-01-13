@@ -10,6 +10,8 @@
 #include "SpriteAnimation.h"
 #include "GameState.h"
 #include "RoomManager.h"
+#include "VictoryState.h"
+#include "DeadState.h"
 
 #include "Heart.h"
 #include "Player.h"
@@ -30,6 +32,10 @@
 GameState::GameState(System& system)
 {
 	m_systems = system;
+
+	SDL_SetRenderDrawColor(m_systems.draw_manager->GetRenderer(), 0x11, 0x12, 0x13, 0xff);
+
+	m_skelly_dead = 0;
 
 	// Plays the bg music
 	std::string soundfilename = "../Skelly_Dungeon/assets/windmillTEMP.wav";
@@ -170,6 +176,16 @@ bool GameState::Update(float deltatime)
 	// positions et al in entities
 	CollisionChecking();
 
+	Player* player = static_cast<Player*>(m_entities[0]);
+	if (player->GetHearts() <= 0)
+	{
+		return false;
+	}
+	else if (m_skelly_dead > 8)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -208,7 +224,7 @@ void GameState::DrawGUI()
 	Player* player = static_cast<Player*>(m_entities[0]);													// Static casts the first element in m_entities, which is always player, to a pointer so we can access the Player class's functions ( GetHearts() )
 	m_systems.draw_manager->Draw(m_GUIVector[2], 580, 35);
 
-	for (unsigned int i = 0; i < player->GetHearts(); i++)
+	for (int i = 0; i < player->GetHearts(); i++)
 	{
 		m_systems.draw_manager->Draw(m_GUIVector[0], 600+i*80, 11);
 		
@@ -243,7 +259,12 @@ void GameState::DrawBackground(int BGoffsetX, int BGoffSetY)
 
 State* GameState::NextState()
 {
-	return nullptr;
+	Player* player = static_cast<Player*>(m_entities[0]);
+	if (player->GetHearts() <= 0)
+	{
+		return new DeadState(m_systems);
+	}
+	return new VictoryState(m_systems);
 }
 
 
@@ -270,16 +291,19 @@ void GameState::CollisionChecking()
 		}
 		else if (m_entities[i]->GetType() == ENTITY_ENEMY)
 		{
-			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY))
+			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY) && !player->IsInvincible())
 			{
-				player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
-				player->GetCollider()->SetPosition(player->GetX(), player->GetY());
+				player->SetState(STATE_DAMAGE, overlapX, overlapY);
+				player->SetHearts(-1);
+				//player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
+				//player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}
 			if (player->GetState() == STATE_ATTACKING && CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
 			{
 				
 				GetSoundClip("Hit")->Play();
 				m_entities.erase(m_entities.begin() + i);
+				m_skelly_dead += 1; 
 			}
 		}
 	}
@@ -304,6 +328,7 @@ void GameState::CollisionChecking()
 
 void GameState::NextRoom(std::string name)
 {
+	m_skelly_dead = 0;
 
 	//deallocate everything in the old room
 	auto it = m_entities.begin();

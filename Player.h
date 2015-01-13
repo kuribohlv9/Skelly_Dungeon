@@ -28,18 +28,21 @@ public:
 	EEntityType GetType();
 	void SetPosition(int x, int y);
 	PlayerState GetState();
+	void SetState(PlayerState state, float directionX, float DirectionY);
 
 	void SetHearts(int change);																		// a public function for changing the heart counter, HeartCounter, a protected variable
 	int GetHearts();																				// a public function for getting the HeartCounter in GameState
 //	void SetSword(bool change);
+	bool IsInvincible();
 
 private:
 	float m_x;
 	float m_y;
 	float m_speed;
 	float m_attackTimer;
+	float m_damageTimer;
 	bool m_visible;
-	bool m_attacking;																				// a variable to check if the player is attacking
+	bool m_isInvincible;
 	std::string m_direction;
 	std::string m_last_direction;
 

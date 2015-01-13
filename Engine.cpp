@@ -7,6 +7,7 @@
 #include "StateManager.h"
 #include "SoundManager.h"
 #include "GameState.h"
+#include "MenuState.h"
 #include "Engine.h"
 
 Engine::Engine()
@@ -48,7 +49,7 @@ bool Engine::Initialize()
 	system.input_manager = m_input_manager;
 	system.sprite_manager = m_sprite_manager;
 	system.sound_manager = m_sound_manager;
-	m_state_manager->SetState(new GameState(system));
+	m_state_manager->SetState(new MenuState(system));
 
 	return true;
 }
