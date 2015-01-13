@@ -9,6 +9,7 @@ class Entity;
 class RoomManager;
 class Room;
 class SoundClip;
+class SpriteAnimation;
 
 class GameState : public State
 {
@@ -36,6 +37,8 @@ private:
 	bool m_active;
 	RoomManager* m_roomManager;
 	Room* m_room;
+
+	int m_skelly_dead;
 
 };
 

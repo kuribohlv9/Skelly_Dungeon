@@ -105,6 +105,15 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -180,6 +189,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

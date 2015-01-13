@@ -32,6 +32,7 @@ bool StateManager::Update()
 
 	if (!m_active_state->Update(deltatime))
 		SetState(m_active_state->NextState());
+
 	return true;
 }
 

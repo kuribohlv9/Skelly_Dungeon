@@ -7,6 +7,7 @@ SpriteAnimation::SpriteAnimation(SDL_Texture* texture) : Sprite(texture)
 {
 	m_timer = 0.0f;
 	m_frame = 0;
+	m_WillAnimate = true;
 }
 
 
@@ -16,19 +17,22 @@ SpriteAnimation::~SpriteAnimation()
 
 void SpriteAnimation::Update(float deltatime)
 {
-	m_timer += deltatime;
-	auto itr = m_animations.find(m_active_animation);													// m_active_animation är en sträng som alla animationer har (se Player.cpp)
-	if (itr != m_animations.end())
+	if (m_WillAnimate == true)
 	{
-		const AnimationFrameVector& ver = itr->second;
-		if (m_timer > 1.0f/ver[m_frame].m_duration)
+		m_timer += deltatime;
+		auto itr = m_animations.find(m_active_animation);													// m_active_animation är en sträng som alla animationer har (se Player.cpp)
+		if (itr != m_animations.end())
 		{
-			m_frame++;
-			m_frame = m_frame % ver.size();
-			m_timer = 0.0f;
-		}
-		m_region = ver[m_frame].m_region;																
-	}																									// vi uppdaterar inte regionen om den är tom, dvs om vi inte hittar en keypress. Detta gör att animationen stannar om spelaren slutar trycka på en tangent att röra sig
+			const AnimationFrameVector& ver = itr->second;
+			if (m_timer > 1.0f / ver[m_frame].m_duration)
+			{
+				m_frame++;
+				m_frame = m_frame % ver.size();
+				m_timer = 0.0f;
+			}
+			m_region = ver[m_frame].m_region;
+		}																									// vi uppdaterar inte regionen om den är tom, dvs om vi inte hittar en keypress. Detta gör att animationen stannar om spelaren slutar trycka på en tangent att röra sig
+	}
 }
 
 void SpriteAnimation::AddFrame(const std::string& animationName, const AnimFrame& frame)
@@ -58,4 +62,8 @@ void SpriteAnimation::SetAnimation(const std::string& animationName)
 std::string SpriteAnimation::GetAnimationName()
 {
 	return m_active_animation;
+}
+void SpriteAnimation::SetAnimate(bool animate)
+{
+	m_WillAnimate = animate;
 }

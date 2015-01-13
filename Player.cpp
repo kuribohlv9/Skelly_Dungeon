@@ -30,8 +30,9 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite, SoundClip* sClip)
 	//Set visible
 	m_visible = true;
 
+	m_isInvincible = false;
+
 	HeartCounter = 4;																				// sets starting HeartCounter to 4
-	m_attacking = false;
 	m_attackTimer = 0.0f;
 
 	m_state = STATE_NORMAL;
@@ -125,16 +126,23 @@ void Player::Update(float deltatime)
 			break;
 		}
 
-		if (directionX == 0 && directionY == 0)
-		{
-			//This stops the sprite from animating
-			m_sprite->SetAnimation("Nope");
-		}
+		
 		if (m_direction != m_last_direction)
 		{
 			//Stops the sprite's animation from restarting unless they change direction
 			m_sprite->SetAnimation(m_direction);
 			m_last_direction = m_direction;
+		}
+		if (directionX == 0 && directionY == 0)
+		{
+			//This stops the sprite from animating
+			//m_sprite->SetAnimation("Nope");
+			//m_last_direction = "lolwut";
+			m_sprite->SetAnimate(false);
+		}
+		else
+		{
+			m_sprite->SetAnimate(true);
 		}
 
 		//Normalize the direction so diagonal movement is at normal speed
@@ -167,7 +175,45 @@ void Player::Update(float deltatime)
 		}
 		break;
 	}
+	case STATE_DAMAGE:
+	{
+		m_damageTimer += deltatime;
 
+		if (m_direction == "right")
+		{
+			m_x -= (m_speed*deltatime);
+		}
+		else if (m_direction == "left")
+		{
+			m_x += (m_speed*deltatime);
+		}
+		else if (m_direction == "down")
+		{
+			m_y -= (m_speed*deltatime);
+		}
+		else if (m_direction == "up")
+		{
+			m_y += (m_speed*deltatime);
+		}
+
+		m_collider->SetPosition(m_x, m_y);
+
+		if (m_damageTimer > 0.5f)
+		{
+			m_state = STATE_NORMAL;
+		}
+		break;
+	}
+
+	}
+	if (m_damageTimer > 0)
+	{
+		m_damageTimer += deltatime;
+		if (m_damageTimer > 1.5f)
+		{
+			m_isInvincible = false;
+			m_damageTimer = 0;
+		}
 	}
 }
 
@@ -230,4 +276,32 @@ int Player::GetHearts()
 PlayerState Player::GetState()
 {
 	return m_state;
+}
+
+void Player::SetState(PlayerState state, float x, float y)
+{
+	m_state = state;
+	m_attackTimer = 0;
+	m_isInvincible = true;
+	/*if (x < 0)
+	{
+		m_direction = "left";
+	}
+	else if (x > 0)
+	{
+		m_direction = "right";
+	}
+	else if (y < 0)
+	{
+		m_direction = "up";
+	}
+	else if (y > 0)
+	{
+		m_direction = "down";
+	}*/
+}
+
+bool Player::IsInvincible()
+{
+	return m_isInvincible;
 }

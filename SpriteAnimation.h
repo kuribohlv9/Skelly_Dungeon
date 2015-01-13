@@ -20,11 +20,14 @@ public:
 	void AddFrame(const std::string& animationName, const AnimFrame &frame);
 	void SetAnimation(const std::string& animationName);
 	std::string GetAnimationName();
+	void SetAnimate(bool animate);
 
 private:
 	std::string m_active_animation;
 	float m_timer;
 	unsigned int m_frame;
 	AnimationMap m_animations;
+
+	bool m_WillAnimate;
 
 };

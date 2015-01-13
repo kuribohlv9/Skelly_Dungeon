@@ -3,7 +3,7 @@ room1 14 11
 4 room3 80 240 room3 160 240 room2 80 80 room4 160 80
 u u u u u u d d u u u u u u
 w w w w w w e e w w w w w u
-w e e e e e e e e e e e w u
+w g g g e e e e e e e e w u
 w g g g g g g g g g e e w u
 w g g g g g g g g g e e w u
 w g g g g g g g e g g g g d
@@ -25,10 +25,16 @@ w g g w
 w g g w
 u d d u
 room4 5 6
-1 room1 480 720
+2 room1 480 720 room5 160 80
 u u d u u
 w w g w w
 w g g g w
 w g g g w
 w g g g w
-w w w w w
+w w d w w
+room5 5 4
+1 room4 160 320
+u u d u u
+w w g w w
+w g g g w
+g g g g g

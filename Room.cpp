@@ -3,6 +3,7 @@
 #include "Wall.h"
 #include "Collider.h"
 #include "Skeleton.h"
+#include "SpriteAnimation.h"
 
 
 Room::Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber, std::vector<Collider*>* wallColliders)
