@@ -121,7 +121,7 @@ void Player::Update(float deltatime)
 			
 			m_state = STATE_ATTACKING;
 			m_attackTimer = 0;
-			m_soundClip->Play();
+			m_soundClip->Play();																			// plays the soundclip for attacking, which is loaded in GameState and sent in via the player's ctor
 			break;
 		}
 

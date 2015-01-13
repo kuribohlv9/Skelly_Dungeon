@@ -1,0 +1,3 @@
+../Skelly_Dungeon/assets/gui.png
+life 1
+1 0 0 25 10

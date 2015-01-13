@@ -31,14 +31,25 @@ GameState::GameState(System& system)
 {
 	m_systems = system;
 
-
+	// Plays the bg music
 	std::string soundfilename = "../Skelly_Dungeon/assets/windmillTEMP.wav";
 	MusicClip* mClip = m_systems.sound_manager->CreateMusicClip(soundfilename);
 	mClip->Play();
 
-	
-	std::string swordSound = "../Skelly_Dungeon/assets/LOZ_Sword.wav";
+	// Creates sword sound effect, stores it as sClip for use in Player.cpp
+	std::string swordSound = "../Skelly_Dungeon/assets/LOZ_Sword.wav";										
 	SoundClip* sClip = m_systems.sound_manager->CreateSoundClip(swordSound);
+
+	// Creates sound fx and adds them as pairs with accompanying string names in the map m_sounds
+	std::string filename = "../Skelly_Dungeon/assets/LOZ_Get_Heart.wav";
+	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(filename);
+	
+	m_sounds.insert(std::pair<std::string, SoundClip*>("HeartSound", clip));								// Places the clip above into the m_sounds map as a pair so it can be recalled with the identifier "HeartSound"
+
+	filename = "../Skelly_Dungeon/assets/LOZ_Hit.wav";
+	clip = m_systems.sound_manager->CreateSoundClip(filename);
+
+	m_sounds.insert(std::pair<std::string, SoundClip*>("Hit", clip));
 	
 
 	//SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
@@ -48,7 +59,7 @@ GameState::GameState(System& system)
 
 
 	//Load player sprite information
-	std::string filename = "../Skelly_Dungeon/assets/Player.txt";
+	filename = "../Skelly_Dungeon/assets/Player.txt";
 
 	//Create player sprite
 	SpriteAnimation* sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
@@ -112,10 +123,19 @@ GameState::GameState(System& system)
 
 	m_active = false;
 
-	// Creates a vector for gui sprites
+
+	//Loads gui sprite info and stores them in the vector m_GUIVector
 
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/guiheart.txt");
 	sprite->SetAnimation("guiheart");
+	m_GUIVector.push_back(sprite);
+
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/life.txt");
+	sprite->SetAnimation("life");
+	m_GUIVector.push_back(sprite);
+
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/box.txt");
+	sprite->SetAnimation("box");
 	m_GUIVector.push_back(sprite);
 }
 
@@ -186,11 +206,12 @@ void GameState::DrawGUI()
 //Here will be code to draw the gui, using GetRenderer() and rectangles
 {
 	Player* player = static_cast<Player*>(m_entities[0]);													// Static casts the first element in m_entities, which is always player, to a pointer so we can access the Player class's functions ( GetHearts() )
+	m_systems.draw_manager->Draw(m_GUIVector[2], 580, 35);
 
 	for (unsigned int i = 0; i < player->GetHearts(); i++)
 	{
-		m_systems.draw_manager->Draw(m_GUIVector[0], 500+i*80, 30);
-
+		m_systems.draw_manager->Draw(m_GUIVector[0], 600+i*80, 11);
+		
 	}
 
 }
@@ -242,9 +263,8 @@ void GameState::CollisionChecking()
 			{
 				Item* item = dynamic_cast<Item*>(m_entities[i]);								// we dynamic cast the abstract class Item as class Entity so that we can access Entity's collider
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
-				std::string soundfilename = "../Skelly_Dungeon/assets/LOZ_Get_Heart.wav";
-				SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
-				clip->Play();
+				
+				GetSoundClip("HeartSound")->Play();
 				m_entities.erase(m_entities.begin() + i);
 			}
 		}
@@ -257,9 +277,8 @@ void GameState::CollisionChecking()
 			}
 			if (player->GetState() == STATE_ATTACKING && CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
 			{
-				std::string soundfilename = "../Skelly_Dungeon/assets/LOZ_Hit.wav";
-				SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
-				clip->Play();
+				
+				GetSoundClip("Hit")->Play();
 				m_entities.erase(m_entities.begin() + i);
 			}
 		}
@@ -309,7 +328,7 @@ void GameState::NextRoom(std::string name)
 	}
 }
 
-SoundClip* GameState::GetSoundClip(std::string name)
+SoundClip* GameState::GetSoundClip(std::string name)														// a function for getting sound clips by referring to their string name, stored as a pair in the map m_sounds
 {
 	auto itr = m_sounds.find(name);
 	return itr->second;
