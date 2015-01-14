@@ -39,7 +39,7 @@ GameState::GameState(System& system)
 	m_skelly_dead = 0;
 
 	// Plays the bg music
-	std::string filename = "../Skelly_Dungeon/assets/windmillTEMP.wav";
+	std::string filename = "../Skelly_Dungeon/assets/windmill.wav";
 	MusicClip* mClip = m_systems.sound_manager->CreateMusicClip(filename);
 	mClip->Play();
 
