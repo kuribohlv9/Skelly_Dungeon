@@ -305,6 +305,7 @@ void GameState::CollisionChecking()
 		if (CollisionManager::Check(m_room->GetDoor(i)->GetCollider(), player->GetCollider(), overlapX, overlapY))
 		{
 			player->SetPosition(m_room->GetDoor(i)->GetDestinationX(), m_room->GetDoor(i)->GetDestinationY());
+			player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			NextRoom(m_room->GetDoor(i)->GetDestinationName());
 		}
 	}

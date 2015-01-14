@@ -46,7 +46,7 @@ void Skeleton::Update(float deltatime)
 	case STATE_PASSIVE:
 	{
 		//If the player is within 160x160 pixels of the skeleton, enter aggressive state with attack timer
-		if (abs(m_player->GetX() - m_x) < 160 && abs(m_player->GetY() - m_y) < 160)
+		if (abs(m_player->GetX() - m_x) < 200 && abs(m_player->GetY() - m_y) < 200)
 		{
 			m_state = STATE_AGGRESSIVE;
 			m_attackTimer = 1;

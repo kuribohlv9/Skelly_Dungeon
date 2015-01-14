@@ -10,8 +10,8 @@
 Player::Player(Keyboard* keyboard, SpriteAnimation* sprite, SoundClip* sClip)
 {
 	//Starting point
-	m_x = 100.0f;
-	m_y = 200.0f;
+	m_x = 560.0f;
+	m_y = 400.0f;
 
 	//Set the players initial speed
 	m_speed = 500.0f;

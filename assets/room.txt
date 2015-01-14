@@ -1,29 +1,38 @@
 ../Skelly_Dungeon/assets/Ambis-Castle.png
 room1 15 11
-0
-u u u u u u u u u u u u u u u
-u w w w w w w w w w w w w w u
+4 room2 560 640 room3 560 240 room4 100 100 room5 100 100
+u u u u u u u d u u u u u u u
+u w w w w w w g w w w w w w u
 u w g g g g g g g g g g g w u
+u w e g g g g g g g g g e w u
 u w g g g g g g g g g g g w u
+d g g g g g g g g g g g g g d
 u w g g g g g g g g g g g w u
-u w g g g g g g g g g g g w u
-u w g g g g g g g g g g g w u
-u w g g g g g g g g g g g w u
-u w g g g g g g g g g g g w u
-u w w w w w w w w w w w w w u
-u u u u u u u u u u u u u u u
-room2 4 3
-1 room1 960 400
-u w w w
-d g g w
-u w w w
-room3 4 5
-2 room1 480 80 room1 560 80
-w w w w
-w g g w
-w g g w
-w g g w
-u d d u
+u w e g g g g g g g g g e w u
+u w g g g e g g g e g g g w u
+u w w w w w w g w w w w w w u
+u u u u u u u d u u u u u u u
+room2 11 10
+2 room6 480 240 room1 560 80 
+u w w w w w w w u u u 
+u w w g g g g w u u u 
+u w g g g g g w w w w 
+d g g g g g g g g w w 
+u w g g g g g g g g w 
+u w w g g g g g g g w 
+u u w w g g g g g g w 
+u u u w w g g g g g w 
+u u u u w w w g w w w 
+u u u u u u u d u u u 
+room3 9 7
+3 room6 240 480 room1 80 400 room7 80 80
+u u u u d u u u u
+w w w w g w w w u
+w g e g g g g w u
+w e g g w w g g d
+w g e g g g g w u
+w w w w g w w w u
+u u u u d u u u u
 room4 5 6
 2 room1 480 720 room5 160 80
 u u d u u
@@ -32,9 +41,28 @@ w g g g w
 w g g g w
 w g g g w
 w w d w w
-room5 5 4
-1 room4 160 320
-u u d u u
-w w g w w
-w g g g w
-g g g g g
+room5 6 6
+3 room1 100 100 room8 100 100 room7 100 100
+u u d u u u
+w w g w w u
+w g g g w u
+u w g g g d
+d g g g w u
+u w w w w u
+room6 8 8
+2 room2 80 240 room3 320 80
+w w w w w w w u
+w e g g g g w u
+w g g w g g w u
+w g w w g g g d
+w g g g w w w u
+w g g g w u u u
+w w w g w u u u
+u u u d u u u u
+room7 5 5
+2 room3 320 400 room5 100 100
+u d u u u
+w g w u u
+w g w w u
+w g g g d
+w w w w u
