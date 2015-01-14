@@ -1,0 +1,7 @@
+../Skelly_Dungeon/assets/victory.png
+victory 1
+1 50 0 700 175
+elipses 4
+2 340 210 115 20
+fornow 1
+1 240 250 250 65
