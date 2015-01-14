@@ -1,0 +1,5 @@
+../Skelly_Dungeon/assets/victory.png
+elipses 3
+7 345 210 20 20
+7 345 210 40 20
+7 345 210 60 20

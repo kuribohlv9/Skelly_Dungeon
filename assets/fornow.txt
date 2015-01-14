@@ -1,0 +1,4 @@
+../Skelly_Dungeon/assets/victory.png
+fornow 2
+2 240 315 335 65
+2 240 250 335 65
