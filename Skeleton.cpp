@@ -75,7 +75,7 @@ void Skeleton::Update(float deltatime)
 				}
 				m_directionY = 0;
 			}
-			//if not, skeleton moves toward player along the y axis
+			//if not, skeleton moves toward player along the y axis.
 			else
 			{
 				if ((m_player->GetY() - m_y) > 0)

@@ -98,7 +98,7 @@ GameState::GameState(System& system)
 
 	//Create room
 
-	Room* room = m_roomManager->CreateRoom("../Skelly_dungeon/assets/room.txt");
+	Room* room = m_roomManager->CreateRoom("../Skelly_Dungeon/assets/room.txt");
 
 	m_room = room;
 	NextRoom("room1");
@@ -108,15 +108,15 @@ GameState::GameState(System& system)
 
 	//Loads gui sprite info and stores them in the vector m_GUIVector
 
-	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/guiheart.txt");
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_Dungeon/assets/guiheart.txt");
 	sprite->SetAnimation("guiheart");
 	m_GUIVector.push_back(sprite);
 
-	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/life.txt");
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_Dungeon/assets/life.txt");
 	sprite->SetAnimation("life");
 	m_GUIVector.push_back(sprite);
 
-	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_dungeon/assets/box.txt");
+	sprite = m_systems.sprite_manager->CreateAnimatedSprite("../Skelly_Dungeon/assets/box.txt");
 	sprite->SetAnimation("box");
 	m_GUIVector.push_back(sprite);
 }

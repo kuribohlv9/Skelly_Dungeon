@@ -59,13 +59,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\external\SDL2_ttf-2.0.12\include;../external/SDL2_image-2.0.0/include;../external/sdl2/include;../external/SDL2_mixer-2.0.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../external/SDL2_image-2.0.0/include;../external/sdl2/include;../external/SDL2_mixer-2.0.0/include;../external/SDL2_ttf-2.0.12/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\external\SDL2_ttf-2.0.12\lib\x86;../external/SDL2_image-2.0.0/lib/x86;../external/sdl2/lib/x86/;../external/SDL2_mixer-2.0.0/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../external/SDL2_image-2.0.0/lib/x86;../external/sdl2/lib/x86/;../external/SDL2_mixer-2.0.0/lib/x86;../external/SDL2_ttf-2.0.12/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

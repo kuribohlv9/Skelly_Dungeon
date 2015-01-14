@@ -1,5 +1,7 @@
 #pragma once
 #include "State.h"
+#include "SpriteText.h"
+#include "Sprite.h"
 
 class MenuState : public State
 {
@@ -14,5 +16,7 @@ public:
 private:
 
 	System m_systems;
+	std::vector<SpriteText*> m_spriteText;
+	std::vector<Sprite*> m_sprite;
 };
 
