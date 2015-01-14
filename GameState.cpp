@@ -145,8 +145,10 @@ bool GameState::Update(float deltatime)
 
 		// update
 		m_entities[i]->Update(deltatime);
-		m_entities[i]->GetSprite()->Update(deltatime);
 	}
+	m_entities[0]->GetSprite()->Update(deltatime);
+	m_roomManager->GetSprite("Skelly")->Update(deltatime);
+	m_roomManager->GetSprite("heart")->Update(deltatime);
 
 	// we always do collision checking after updating 
 	// positions et al in entities
@@ -157,7 +159,7 @@ bool GameState::Update(float deltatime)
 	{
 		return false;
 	}
-	else if (m_skelly_dead > 8)
+	else if (m_skelly_dead > 20)
 	{
 		return false;
 	}
@@ -313,8 +315,6 @@ void GameState::CollisionChecking()
 
 void GameState::NextRoom(std::string name)
 {
-	m_skelly_dead = 0;
-
 	//deallocate everything in the old room
 	auto it = m_entities.begin();
 	it++;
