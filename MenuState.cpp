@@ -17,7 +17,7 @@ MenuState::~MenuState()
 
 bool MenuState::Update(float deltatime)
 {
-	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(4) == true)
+	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(5) == true)
 	{
 		return false;
 	}

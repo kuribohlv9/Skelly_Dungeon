@@ -162,6 +162,10 @@ void Engine::HandleEvents()
 			{
 				m_input_manager->SetKeyboard(4, true);
 			}
+			else if (key == SDLK_RETURN)
+			{
+				m_input_manager->SetKeyboard(5, true);
+			}
 			else if (key == SDLK_ESCAPE)
 			{
 				m_running = false;
@@ -190,6 +194,10 @@ void Engine::HandleEvents()
 			else if (key == SDLK_z)
 			{
 				m_input_manager->SetKeyboard(4, false);
+			}
+			else if (key == SDLK_RETURN)
+			{
+				m_input_manager->SetKeyboard(5, false);
 			}
 			break;
 		}

@@ -39,7 +39,7 @@ Room::~Room()
 	}
 }
 
-std::vector<Entity*> Room::Load(int scale, SpriteAnimation* skeletonSprite)
+std::vector<Entity*> Room::Load(int scale, SpriteAnimation* skeletonSprite, Player* player)
 {
 
 	std::vector<Entity*> tempVector;
@@ -49,7 +49,7 @@ std::vector<Entity*> Room::Load(int scale, SpriteAnimation* skeletonSprite)
 		{
 			if (m_tilemap[i][j] == TILE_ENEMY)
 			{
-				Skeleton* skelly = new Skeleton(skeletonSprite, j * 16.0f * scale, i * 16.0f * scale);
+				Skeleton* skelly = new Skeleton(skeletonSprite, player, j * 16.0f * scale, i * 16.0f * scale);
 				tempVector.push_back(skelly);
 			}
 		}

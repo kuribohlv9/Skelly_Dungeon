@@ -15,6 +15,7 @@ class Collider;
 class Door;
 class Entity;
 class SpriteAnimation;
+class Player;
 
 class Room
 {
@@ -22,7 +23,7 @@ public:
 	Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber, std::vector<Collider*>* wallColliders);
 	~Room();
 
-	std::vector<Entity*> Load(int scale, SpriteAnimation* skeletonSprite);
+	std::vector<Entity*> Load(int scale, SpriteAnimation* skeletonSprite, Player* player);
 
 	TileMapVector GetTilemap();
 	int GetWidth();

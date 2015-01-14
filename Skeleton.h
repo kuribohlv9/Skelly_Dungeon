@@ -2,10 +2,18 @@
 #include "Entity.h"
 #include "Enemy.h"
 
+class Player;
+
+enum EnemyState
+{
+	STATE_PASSIVE,
+	STATE_AGGRESSIVE
+};
+
 class Skeleton : public Enemy, public Entity
 {
 public:
-	Skeleton(SpriteAnimation* sprite, float startX, float startY);
+	Skeleton(SpriteAnimation* sprite, Player* player, float startX, float startY);
 	~Skeleton();
 
 	void Update(float deltatime);
@@ -32,6 +40,8 @@ private:
 	float m_attackTimer;
 	bool m_visible;
 
+	EnemyState m_state;
+	Player* m_player;
 
 	Collider* m_collider;
 	SpriteAnimation* m_sprite;

@@ -18,7 +18,7 @@ DeadState::~DeadState()
 
 bool DeadState::Update(float deltatime)
 {
-	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(0) == true)
+	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(5) == true)
 	{
 		return false;
 	}

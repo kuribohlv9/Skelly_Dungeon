@@ -96,7 +96,7 @@ GameState::GameState(System& system)
 	sprite->SetAnimation("skeleton");
 
 	//Create skeleton!!
-	Skeleton* skeleton = new Skeleton(sprite, 400, 400);
+	Skeleton* skeleton = new Skeleton(sprite, player, 400, 400);
 	m_entities.push_back(skeleton);
 
 	m_roomManager->AddSprite("Skelly", sprite);
@@ -343,7 +343,9 @@ void GameState::NextRoom(std::string name)
 
 	m_room = m_roomManager->GetRoom(name);
 
-	std::vector<Entity*> tempVector = m_room->Load(m_systems.draw_manager->GetScale(), m_roomManager->GetSprite("Skelly"));
+	Player* player = static_cast<Player*>(m_entities[0]);
+
+	std::vector<Entity*> tempVector = m_room->Load(m_systems.draw_manager->GetScale(), m_roomManager->GetSprite("Skelly"), player);
 
 	auto itr = tempVector.begin();
 	while (itr != tempVector.end())
