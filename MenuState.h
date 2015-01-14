@@ -2,6 +2,7 @@
 #include "State.h"
 #include "SpriteText.h"
 #include "Sprite.h"
+#include "SpriteAnimation.h"
 
 class MenuState : public State
 {
@@ -18,5 +19,6 @@ private:
 	System m_systems;
 	std::vector<SpriteText*> m_spriteText;
 	std::vector<Sprite*> m_sprite;
+	std::vector<SpriteAnimation*> m_animsprite;
 };
 

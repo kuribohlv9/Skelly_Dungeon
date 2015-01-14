@@ -1,0 +1,4 @@
+../Skelly_Dungeon/assets/pressenter.png
+pressenter 2
+1 175 0 475 75
+2 655 80 475 75
