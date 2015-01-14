@@ -300,9 +300,20 @@ void GameState::CollisionChecking()
 			if (player->GetState() == STATE_ATTACKING && CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
 			{
 				
+				Heart* heart = nullptr;
 				GetSoundClip("Hit")->Play();
+				if (static_cast<int>(player->GetX()) % 2 == 0)
+				{
+					heart = new Heart(m_roomManager->GetSprite("heart"), m_entities[i]->GetX(), m_entities[i]->GetY());
+				}
+
 				m_entities.erase(m_entities.begin() + i);
-				m_skelly_dead += 1; 
+				m_skelly_dead += 1;
+
+				if (heart)
+				{
+					m_entities.push_back(heart);
+				}
 			}
 		}
 	}

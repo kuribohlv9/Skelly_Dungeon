@@ -265,7 +265,10 @@ void Player::SetPosition(int x, int y)
 
 void Player::SetHearts(int change)
 {
-	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
+	if (HeartCounter < 5)
+	{
+		HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
+	}
 }
 
 int Player::GetHearts()
