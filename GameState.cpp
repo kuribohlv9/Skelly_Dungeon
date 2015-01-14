@@ -292,6 +292,7 @@ void GameState::CollisionChecking()
 		{
 			if (CollisionManager::Check(m_entities[i]->GetCollider(), player->GetCollider(), overlapX, overlapY) && !player->IsInvincible())
 			{
+				GetSoundClip("Hurt")->Play();
 				player->SetState(STATE_DAMAGE, overlapX, overlapY);
 				player->SetHearts(-1);
 				//player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));

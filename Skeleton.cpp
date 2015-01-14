@@ -40,10 +40,12 @@ Skeleton::~Skeleton()
 
 void Skeleton::Update(float deltatime)
 {
+	//AI for the skeleton, using states
 	switch (m_state)
 	{
 	case STATE_PASSIVE:
 	{
+		//If the player is within 160x160 pixels of the skeleton, enter aggressive state with attack timer
 		if (abs(m_player->GetX() - m_x) < 160 && abs(m_player->GetY() - m_y) < 160)
 		{
 			m_state = STATE_AGGRESSIVE;
@@ -51,13 +53,16 @@ void Skeleton::Update(float deltatime)
 		}
 		break;
 	}
+	//Aggressive state
 	case STATE_AGGRESSIVE:
 	{
 		m_attackTimer += deltatime;
 
+		//If attack timer is appropriate
 		if (m_attackTimer > 0.5f)
 		{
 			m_attackTimer = 0;
+			//checks to see if deltaX between skeleton and player is greater than deltaY "". If so, skeleton moves toward player along the x axis
 			if (abs(m_player->GetX() - m_x) > abs(m_player->GetY() - m_y))
 			{
 				if ((m_player->GetX() - m_x) > 0)
@@ -70,6 +75,7 @@ void Skeleton::Update(float deltatime)
 				}
 				m_directionY = 0;
 			}
+			//if not, skeleton moves toward player along the y axis
 			else
 			{
 				if ((m_player->GetY() - m_y) > 0)
@@ -82,6 +88,7 @@ void Skeleton::Update(float deltatime)
 				}
 				m_directionX = 0;
 			}
+			//Skeleton enters passive state if it is farther than 360 pixels from the player along either x or y axes
 			if (abs(m_player->GetX() - m_x) > 360 || abs(m_player->GetY() - m_y) > 360)
 			{
 				m_directionX = 0;
