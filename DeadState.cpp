@@ -23,6 +23,8 @@ DeadState::~DeadState()
 
 bool DeadState::Update(float deltatime)
 {
+	m_scale += deltatime;
+
 	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(5) == true)
 	{
 		return false;
@@ -32,7 +34,7 @@ bool DeadState::Update(float deltatime)
 
 void DeadState::Draw()
 {
-	m_systems.draw_manager->Draw(m_animsprite[0], 280, 380, 1);
+	m_systems.draw_manager->Draw(m_animsprite[0], 342, 10, m_scale);
 }
 
 State* DeadState::NextState()

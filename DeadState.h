@@ -16,5 +16,6 @@ private:
 
 	System m_systems;
 	std::vector<SpriteAnimation*> m_animsprite;
+	float m_scale;
 };
 
