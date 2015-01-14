@@ -8,8 +8,6 @@ DrawManager::DrawManager()
 {
 	m_window = nullptr;
 	m_renderer = nullptr;
-
-	m_scale = 5;
 }
 
 DrawManager::~DrawManager()
@@ -65,18 +63,13 @@ void DrawManager::Present()
 	SDL_RenderPresent(m_renderer);
 }
 
-void DrawManager::Draw(Sprite* sprite, int x, int y)
+void DrawManager::Draw(Sprite* sprite, int x, int y, int scale)
 {
-	SDL_Rect dest = { x, y, sprite->GetRegion()->w*m_scale, sprite->GetRegion()->h*m_scale };				// upscaling for our sprite. Our sprite is 16x16, but we set a scale value of 5 for a 80x80 sprite onscreen
+	SDL_Rect dest = { x, y, sprite->GetRegion()->w*scale, sprite->GetRegion()->h*scale };				// upscaling for our sprite. Our sprite is 16x16, but we set a scale value of 5 for a 80x80 sprite onscreen
 	SDL_RenderCopy(m_renderer, sprite->GetTexture(), sprite->GetRegion(), &dest);	
 }
 
 SDL_Renderer* DrawManager::GetRenderer()
 {
 	return m_renderer;
-}
-
-int DrawManager::GetScale()
-{
-	return m_scale;
 }

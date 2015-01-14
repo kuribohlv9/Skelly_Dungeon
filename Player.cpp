@@ -32,7 +32,7 @@ Player::Player(Keyboard* keyboard, SpriteAnimation* sprite, SoundClip* sClip)
 
 	m_isInvincible = false;
 
-	HeartCounter = 4;																				// sets starting HeartCounter to 4
+	HeartCounter = 3;																				// sets starting HeartCounter to 4
 	m_attackTimer = 0.0f;
 
 	m_state = STATE_NORMAL;
@@ -265,9 +265,10 @@ void Player::SetPosition(int x, int y)
 
 void Player::SetHearts(int change)
 {
-	if (HeartCounter < 5)
+	HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
+	if (HeartCounter > 5)
 	{
-		HeartCounter+= change;																				// using this function we can change the value of HeartCounter from GameState
+		HeartCounter = 5;
 	}
 }
 

@@ -32,22 +32,23 @@
 GameState::GameState(System& system)
 {
 	m_systems = system;
+	m_scale = 5;
 
 	SDL_SetRenderDrawColor(m_systems.draw_manager->GetRenderer(), 0x11, 0x12, 0x13, 0xff);
 
 	m_skelly_dead = 0;
 
 	// Plays the bg music
-	std::string soundfilename = "../Skelly_Dungeon/assets/windmillTEMP.wav";
-	MusicClip* mClip = m_systems.sound_manager->CreateMusicClip(soundfilename);
+	std::string filename = "../Skelly_Dungeon/assets/windmillTEMP.wav";
+	MusicClip* mClip = m_systems.sound_manager->CreateMusicClip(filename);
 	mClip->Play();
 
 	// Creates sword sound effect, stores it as sClip for use in Player.cpp
-	std::string swordSound = "../Skelly_Dungeon/assets/LOZ_Sword.wav";										
-	SoundClip* sClip = m_systems.sound_manager->CreateSoundClip(swordSound);
+	filename = "../Skelly_Dungeon/assets/LOZ_Sword.wav";
+	SoundClip* sClip = m_systems.sound_manager->CreateSoundClip(filename);
 
 	// Creates sound fx and adds them as pairs with accompanying string names in the map m_sounds
-	std::string filename = "../Skelly_Dungeon/assets/LOZ_Get_Heart.wav";
+	filename = "../Skelly_Dungeon/assets/LOZ_Get_Heart.wav";
 	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(filename);
 	m_sounds.insert(std::pair<std::string, SoundClip*>("HeartSound", clip));								// Places the clip above into the m_sounds map as a pair so it can be recalled with the identifier "HeartSound"
 	
@@ -62,11 +63,8 @@ GameState::GameState(System& system)
 	// Create RoomManager
 	m_roomManager = new RoomManager();
 
-
-	//Load player sprite information
-	filename = "../Skelly_Dungeon/assets/Player.txt";
-
 	//Create player sprite
+	filename = "../Skelly_Dungeon/assets/Player.txt";
 	SpriteAnimation* sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("down");
 
@@ -74,50 +72,29 @@ GameState::GameState(System& system)
 	Player* player = new Player(m_systems.input_manager->GetKeyboard(), sprite, sClip);
 	m_entities.push_back(player);
 
-	//Load Hearts sprite information
-	filename = "../Skelly_Dungeon/assets/Heart.txt";
-
 	//Create heart sprite
+	filename = "../Skelly_Dungeon/assets/Heart.txt";
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("heart");
-
 	m_roomManager->AddSprite("heart", sprite);
 
-	//Create heart
-	Heart* heart = new Heart(sprite, 50, 50);																// makes a new heart with set a giving position of 50x50
-	m_entities.push_back(heart);																			// adds heart sprite to the vector
-
-	//Load skeleton sprite information
-	filename = "../Skelly_Dungeon/assets/Skeleton.txt";
-
 	//Create skeleton sprite
+	filename = "../Skelly_Dungeon/assets/Skeleton.txt";
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("skeleton");
-
-	//Create skeleton!!
-	Skeleton* skeleton = new Skeleton(sprite, player, 400, 400);
-	m_entities.push_back(skeleton);
-
 	m_roomManager->AddSprite("Skelly", sprite);
-
 
 	//Create wall sprite
 	filename = "../Skelly_Dungeon/assets/Wall.txt";
-
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("wall");
-
 	m_roomManager->AddSprite("wall", sprite);
-
-	//Wall* wall = new Wall(sprite, 300, 300);
 	
+	//Create ground sprite
 	filename = "../Skelly_Dungeon/assets/Ground.txt";
 	sprite = m_systems.sprite_manager->CreateAnimatedSprite(filename);
 	sprite->SetAnimation("ground");
-
 	m_roomManager->AddSprite("ground", sprite);
-
-	//m_entities.push_back(wall);
 
 	//Create room
 
@@ -190,6 +167,7 @@ bool GameState::Update(float deltatime)
 
 void GameState::Draw()
 {
+	//To create the illusion of a camera we draw everything offset to the player
 	int BGoffsetX = 470;
 	int BGoffSetY = 320;
 
@@ -205,11 +183,11 @@ void GameState::Draw()
 		{
 			if (i != 0)
 			{
-				m_systems.draw_manager->Draw(sprite, m_entities[i]->GetX() - m_entities[0]->GetX() + BGoffsetX, m_entities[i]->GetY() - m_entities[0]->GetY() + BGoffSetY);
+				m_systems.draw_manager->Draw(sprite, m_entities[i]->GetX() - m_entities[0]->GetX() + BGoffsetX, m_entities[i]->GetY() - m_entities[0]->GetY() + BGoffSetY, m_scale);
 			}
 			else
 			{
-				m_systems.draw_manager->Draw(sprite, m_systems.width / 2 - m_entities[i]->GetSprite()->GetRegion()->w * 5 / 2, m_systems.height / 2 - m_entities[i]->GetSprite()->GetRegion()->h * 5 / 2);
+				m_systems.draw_manager->Draw(sprite, m_systems.width / 2 - m_entities[i]->GetSprite()->GetRegion()->w * 5 / 2, m_systems.height / 2 - m_entities[i]->GetSprite()->GetRegion()->h * 5 / 2, m_scale);
 			}
 		}
 	}
@@ -221,11 +199,11 @@ void GameState::DrawGUI()
 //Here will be code to draw the gui, using GetRenderer() and rectangles
 {
 	Player* player = static_cast<Player*>(m_entities[0]);													// Static casts the first element in m_entities, which is always player, to a pointer so we can access the Player class's functions ( GetHearts() )
-	m_systems.draw_manager->Draw(m_GUIVector[2], 580, 35);
+	m_systems.draw_manager->Draw(m_GUIVector[2], 580, 35, m_scale);
 
 	for (int i = 0; i < player->GetHearts(); i++)
 	{
-		m_systems.draw_manager->Draw(m_GUIVector[0], 600+i*80, 11);
+		m_systems.draw_manager->Draw(m_GUIVector[0], 600 + i * 80, 11, m_scale);
 		
 	}
 
@@ -241,16 +219,12 @@ void GameState::DrawBackground(int BGoffsetX, int BGoffSetY)
 		{
 			if (m_room->GetTilemap()[i][j] == TILE_GROUND || m_room->GetTilemap()[i][j] == TILE_ENEMY)
 			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("ground"), j * 16 * m_scale - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_scale - m_entities[0]->GetY() + BGoffSetY, m_scale);
 
 			}
 			else if (m_room->GetTilemap()[i][j] == TILE_WALL)
 			{
-				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
-			}
-			else if (m_room->GetTilemap()[i][j] == TILE_DOOR)
-			{
-				//m_systems.draw_manager->Draw(m_roomManager->GetSprite("heart"), j * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_systems.draw_manager->GetScale() - m_entities[0]->GetY() + BGoffSetY);
+				m_systems.draw_manager->Draw(m_roomManager->GetSprite("wall"), j * 16 * m_scale - m_entities[0]->GetX() + BGoffsetX, i * 16 * m_scale - m_entities[0]->GetY() + BGoffSetY, m_scale);
 			}
 		}
 	}
@@ -285,6 +259,7 @@ void GameState::CollisionChecking()
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
 				
 				GetSoundClip("HeartSound")->Play();
+				delete m_entities[i];
 				m_entities.erase(m_entities.begin() + i);
 			}
 		}
@@ -295,8 +270,6 @@ void GameState::CollisionChecking()
 				GetSoundClip("Hurt")->Play();
 				player->SetState(STATE_DAMAGE, overlapX, overlapY);
 				player->SetHearts(-1);
-				//player->SetPosition((player->GetX() - overlapX), (player->GetY() - overlapY));
-				//player->GetCollider()->SetPosition(player->GetX(), player->GetY());
 			}
 			if (player->GetState() == STATE_ATTACKING && CollisionManager::Check(m_entities[i]->GetCollider(), player->GetSwordCollider(), overlapX, overlapY))
 			{
@@ -307,7 +280,7 @@ void GameState::CollisionChecking()
 				{
 					heart = new Heart(m_roomManager->GetSprite("heart"), m_entities[i]->GetX(), m_entities[i]->GetY());
 				}
-
+				delete m_entities[i];
 				m_entities.erase(m_entities.begin() + i);
 				m_skelly_dead += 1;
 
@@ -356,7 +329,7 @@ void GameState::NextRoom(std::string name)
 
 	Player* player = static_cast<Player*>(m_entities[0]);
 
-	std::vector<Entity*> tempVector = m_room->Load(m_systems.draw_manager->GetScale(), m_roomManager->GetSprite("Skelly"), player);
+	std::vector<Entity*> tempVector = m_room->Load(m_scale, m_roomManager->GetSprite("Skelly"), player);
 
 	auto itr = tempVector.begin();
 	while (itr != tempVector.end())

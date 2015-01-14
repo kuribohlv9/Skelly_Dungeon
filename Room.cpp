@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "Skeleton.h"
 #include "SpriteAnimation.h"
+#include "Door.h"
 
 
 Room::Room(std::string name, int width, int height, TileMapVector tileMap, std::vector<Door*> doorVector, int doorNumber, std::vector<Collider*>* wallColliders)
@@ -29,6 +30,8 @@ Room::~Room()
 		it++;
 	}
 	m_wall_colliders->clear();
+	delete m_wall_colliders;
+	m_wall_colliders = nullptr;
 
 	auto itr = m_doors.begin();
 	while (itr != m_doors.end())

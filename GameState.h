@@ -39,6 +39,7 @@ private:
 	Room* m_room;
 
 	int m_skelly_dead;
+	int m_scale;
 
 };
 

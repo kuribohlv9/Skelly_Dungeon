@@ -96,9 +96,7 @@ SoundClip *SoundManager::CreateSoundClip(std::string p_sFilename)
 	{
 		Mix_Chunk *Sound = Mix_LoadWAV(p_sFilename.c_str());
 		std::string derp = SDL_GetError();
-		std::pair<std::string, Mix_Chunk*> Pair;
-		Pair = std::make_pair(p_sFilename, Sound);
-		m_axSounds.insert(Pair);
+		m_axSounds.insert(std::pair<std::string, Mix_Chunk*>(p_sFilename, Sound));
 		Ret = new SoundClip(Sound);
 	}
 	else

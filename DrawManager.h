@@ -17,16 +17,13 @@ public:
 	void Clear();
 	void Present();
 
-	void Draw(Sprite* sprite, int x, int y);
-
-	int GetScale();
+	void Draw(Sprite* sprite, int x, int y, int scale);
 
 	SDL_Renderer* GetRenderer();
 
 private:
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
-	int m_scale;
 };
 
 #endif // DRAWMANAGER_H_INCLUDED

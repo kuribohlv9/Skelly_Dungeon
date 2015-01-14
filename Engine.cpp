@@ -80,6 +80,11 @@ void Engine::Shutdown()
 		m_sprite_manager = nullptr;
 	}
 
+	if (m_sound_manager)
+	{
+		delete m_sound_manager;
+		m_sound_manager = nullptr;
+	}
 	SDL_Quit();
 }
 
