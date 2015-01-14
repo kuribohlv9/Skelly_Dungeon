@@ -49,19 +49,18 @@ GameState::GameState(System& system)
 	// Creates sound fx and adds them as pairs with accompanying string names in the map m_sounds
 	std::string filename = "../Skelly_Dungeon/assets/LOZ_Get_Heart.wav";
 	SoundClip* clip = m_systems.sound_manager->CreateSoundClip(filename);
-	
 	m_sounds.insert(std::pair<std::string, SoundClip*>("HeartSound", clip));								// Places the clip above into the m_sounds map as a pair so it can be recalled with the identifier "HeartSound"
-
+	
 	filename = "../Skelly_Dungeon/assets/LOZ_Hit.wav";
 	clip = m_systems.sound_manager->CreateSoundClip(filename);
-
 	m_sounds.insert(std::pair<std::string, SoundClip*>("Hit", clip));
-	
 
-	//SoundClip* clip = m_systems.sound_manager->CreateSoundClip(soundfilename);
+	filename = "../Skelly_Dungeon/assets/LOZ_Hurt.wav";
+	clip = m_systems.sound_manager->CreateSoundClip(filename);
+	m_sounds.insert(std::pair<std::string, SoundClip*>("Hurt", clip));
 
+	// Create RoomManager
 	m_roomManager = new RoomManager();
-
 
 
 	//Load player sprite information
