@@ -14,7 +14,7 @@ MenuState::MenuState(System& systems)
 	//m_spriteText.push_back(spritetext);
 
 	
-	Sprite* background = m_systems.sprite_manager->CreateSprite("../Skelly_Dungeon/assets/background.png", 0, 0, 1003, 752);
+	Sprite* background = m_systems.sprite_manager->CreateSprite("../Skelly_Dungeon/assets/background.png", 0, 0, 1024, 768);
 	m_sprite.push_back(background);
 }
 
@@ -34,7 +34,7 @@ bool MenuState::Update(float deltatime)
 
 void MenuState::Draw()
 {
-	m_systems.draw_manager->Draw(m_sprite[0], 0, 0);
+	m_systems.draw_manager->Draw(m_sprite[0], 0, 0, 1);
 }
 
 State* MenuState::NextState()
