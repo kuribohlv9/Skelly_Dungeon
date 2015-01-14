@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "SpriteAnimation.h"
+#include "SpriteText.h"
 
 SpriteManager::SpriteManager(SDL_Renderer* renderer)
 {
@@ -64,6 +65,27 @@ Sprite* SpriteManager::CreateSprite(const std::string& filename, int x, int y, i
 
 	// return the newly newed sprite
 	return sprite;
+}
+
+SpriteText* SpriteManager::CreateSprite(const std::string &fontFilename, char size, const std::string &text, int colorR, int colorG, int colorB)
+{
+	auto it = m_fonts.find((fontFilename + " " + size));
+	if (it == m_fonts.end())
+	{
+		TTF_Font* font = TTF_OpenFont(fontFilename.c_str(), size);
+		if (font != nullptr)
+		{
+			m_fonts.insert(std::pair<std::string, TTF_Font*>((fontFilename + " " + size), font));
+		}
+		else
+		{
+			const char* error = SDL_GetError();
+		}
+		it = m_fonts.find((fontFilename + " " + size));
+	}
+	SpriteText* spriteText = new SpriteText(m_renderer, it->second, text, colorR, colorG, colorB);
+	m_sprites.push_back(spriteText);
+	return spriteText;
 }
 
 void SpriteManager::DestroySprite(Sprite* sprite)
