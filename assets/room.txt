@@ -17,7 +17,7 @@ room2 11 10
 u w w w w w w w u u u 
 u w w g g g g w u u u 
 u w g g g g g w w w w 
-d g g g g g g g g w w 
+d g g e e e e g g w w 
 u w g g g g g g g g w 
 u w w g g g g g g g w 
 u u w w g g g g g g w 

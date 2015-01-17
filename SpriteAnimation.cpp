@@ -13,6 +13,7 @@ SpriteAnimation::SpriteAnimation(SDL_Texture* texture) : Sprite(texture)
 
 SpriteAnimation::~SpriteAnimation()
 {
+	SDL_GetError();
 }
 
 void SpriteAnimation::Update(float deltatime)

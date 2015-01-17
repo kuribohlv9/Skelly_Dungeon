@@ -9,6 +9,7 @@
 #include "GameState.h"
 #include "MenuState.h"
 #include "Engine.h"
+#include "vld.h"
 
 Engine::Engine()
 {

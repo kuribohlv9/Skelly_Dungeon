@@ -45,6 +45,8 @@
     <OutDir>../bin/</OutDir>
     <IntDir>../obj/$(ProjectName)/$(Configuration)/</IntDir>
     <TargetName>$(ProjectName).$(Configuration)</TargetName>
+    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

@@ -28,11 +28,7 @@ bool DeadState::Update(float deltatime)
 	//Scales the death prompt sprite with time
 	m_scale += deltatime;
 
-	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(5) == true)
-	{
-		return false;
-	}
-	else if (m_scale > 4)
+	if (m_scale > 4)
 	{
 		return false;
 	}
