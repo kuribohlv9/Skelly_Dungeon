@@ -30,6 +30,7 @@ bool StateManager::Update()
 	float deltatime = delta * 0.001f;
 	m_tick = now;
 
+	// if we are not updating, ie we are exiting our active state, get the next state from the 
 	if (!m_active_state->Update(deltatime))
 		SetState(m_active_state->NextState());
 

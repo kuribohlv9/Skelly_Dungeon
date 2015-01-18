@@ -91,6 +91,7 @@ void Player::Update(float deltatime)
 			m_direction = "down";
 		}
 
+		//If a keypress of Z is detected, sword colliders based on the player's direction when pressing Z are set
 		if (m_keyboard->IsKeyDown(4))
 		{
 			if (m_direction == "left")
@@ -117,7 +118,7 @@ void Player::Update(float deltatime)
 			//Attacks in the direction the player is moving in
 			std::string attack = m_direction + "Attack";
 
-			//sends the player into attacking state;
+			//sends the player into attacking state (finite states inspired by http://gameprogrammingpatterns.com/state.html);
 			m_sprite->SetAnimation(attack);
 			
 			m_state = STATE_ATTACKING;
@@ -168,6 +169,7 @@ void Player::Update(float deltatime)
 	case STATE_ATTACKING:
 	{
 		m_attackTimer += deltatime;
+		//Changes back to normal state after .25 seconds
 		if (m_attackTimer > 0.25f)
 		{
 			m_state = STATE_NORMAL;
@@ -179,6 +181,7 @@ void Player::Update(float deltatime)
 	{
 		m_damageTimer += deltatime;
 
+		//Knockback based on direction when collision occured (collision case handled in GameState.cpp)
 		if (m_direction == "right")
 		{
 			m_x -= (m_speed*deltatime);
@@ -215,7 +218,7 @@ void Player::Update(float deltatime)
 			m_damageTimer = 0;
 		}
 	}
-}
+} 
 
 Sprite* Player::GetSprite()
 {

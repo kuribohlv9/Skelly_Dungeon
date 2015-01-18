@@ -198,7 +198,7 @@ void GameState::Draw()
 }
 
 void GameState::DrawGUI()
-//Here will be code to draw the gui, using GetRenderer() and rectangles
+//Here will be code to draw the gui
 {
 	Player* player = static_cast<Player*>(m_entities[0]);													// Static casts the first element in m_entities, which is always player, to a pointer so we can access the Player class's functions ( GetHearts() )
 	m_systems.draw_manager->Draw(m_GUIVector[2], 580, 35, m_scale);
@@ -261,8 +261,8 @@ void GameState::CollisionChecking()
 				item->PickUp(player);															// we run Item's function, sending in our current player object as a parameter (function takes Player pointers as parameter)
 				
 				GetSoundClip("HeartSound")->Play();
-				delete m_entities[i];
-				m_entities.erase(m_entities.begin() + i);
+				delete m_entities[i];															// deletes the dynamically allocated memory where the heart was stored in the vector
+				m_entities.erase(m_entities.begin() + i);										// erase removes the pointer to the heart AND its position in the vector (otherwise there will be a memleak!)
 			}
 		}
 		else if (m_entities[i]->GetType() == ENTITY_ENEMY)

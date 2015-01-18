@@ -31,10 +31,13 @@ VictoryState::~VictoryState()
 
 bool VictoryState::Update(float deltatime)
 {
+	//Updates the animated sprites in our vector
 	for (int i = 0; i < m_animsprite.size(); i++)
 	{
 		m_animsprite[i]->Update(deltatime);
 	}
+
+	//Returns false if the player presses enter, used in State Manager's Update() function to go to the next state, specified below as GameState 
 	if (m_systems.input_manager->GetKeyboard()->IsKeyDown(5) == true)
 	{
 		return false;

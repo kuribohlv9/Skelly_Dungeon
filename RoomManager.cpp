@@ -84,7 +84,7 @@ Room* RoomManager::CreateRoom(std::string filename)
 				destinationY.push_back(destination);
 			}
 
-			//Then we need to rember which doors is which
+			//Then we need to remember which doors is which
 			DoorNumber = 0;
 			std::vector<Door*> doorVector;
 
