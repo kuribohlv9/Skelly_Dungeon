@@ -51,6 +51,12 @@ void Skeleton::Update(float deltatime)
 			m_state = STATE_AGGRESSIVE;
 			m_attackTimer = 1;
 		}
+
+		//if the skelly is not aggressive and does not stand in its original position, enter state returning
+		if (m_x != m_originPositionX || m_y != m_originPositionY)
+		{
+			m_state = STATE_RETURNING;
+		}
 		break;
 	}
 	//Aggressive state
@@ -101,6 +107,54 @@ void Skeleton::Update(float deltatime)
 		m_collider->SetPosition(m_x, m_y);
 		break;
 	}
+	case STATE_RETURNING:
+	{
+		//if we are withing walking distance of our originalposition, go directly to it...
+		if (m_originPositionX > m_x - deltatime * 200 && m_originPositionX < m_x + deltatime * 200)
+		{
+			m_x = m_originPositionX;
+		}
+		else
+		{
+			//...otherwise start moving towards the original position
+			if (m_x > m_originPositionX)
+			{
+				m_x -= deltatime * 200;
+			}
+			else
+			{
+				m_x += deltatime * 200;
+			}
+		}
+
+		//same as above but in the Y axis
+		if (m_originPositionY > m_y - deltatime * 200 && m_originPositionY < m_y + deltatime * 200)
+		{
+			m_y = m_originPositionY;
+		}
+		else
+		{
+			if (m_y > m_originPositionY)
+			{
+				m_y -= deltatime * 200;
+			}
+			else
+			{
+				m_y += deltatime * 200;
+			}
+		}
+
+
+		//if we've reached our original position, go back to state passive
+		if (m_x == m_originPositionX && m_y == m_originPositionY)
+		{
+			m_state = STATE_PASSIVE;
+		}
+
+		//update collider
+		m_collider->SetPosition(m_x, m_y);
+		break;
+	}
 	default:
 		break;
 	}
@@ -141,4 +195,9 @@ void Skeleton::SetInvisible()
 EEntityType Skeleton::GetType()
 {
 	return ENTITY_ENEMY;
+}
+void Skeleton::SetOrigin(int x, int y)
+{
+	m_originPositionX = x;
+	m_originPositionY = y;
 }

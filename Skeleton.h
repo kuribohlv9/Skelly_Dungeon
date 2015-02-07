@@ -7,7 +7,8 @@ class Player;
 enum EnemyState
 {
 	STATE_PASSIVE,
-	STATE_AGGRESSIVE
+	STATE_AGGRESSIVE,
+	STATE_RETURNING
 };
 
 class Skeleton : public Enemy, public Entity
@@ -28,6 +29,7 @@ public:
 	void SetPosition(int x, int y);
 	float GetDirectionX();
 	float GetDirectionY();
+	void SetOrigin(int x, int y);
 
 
 
@@ -36,6 +38,8 @@ private:
 	float m_y;
 	float m_directionX;
 	float m_directionY;
+	float m_originPositionX;
+	float m_originPositionY;
 	float m_speed;
 	float m_attackTimer;
 	bool m_visible;

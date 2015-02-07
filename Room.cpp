@@ -53,6 +53,7 @@ std::vector<Entity*> Room::Load(int scale, SpriteAnimation* skeletonSprite, Play
 			if (m_tilemap[i][j] == TILE_ENEMY)
 			{
 				Skeleton* skelly = new Skeleton(skeletonSprite, player, j * 16.0f * scale, i * 16.0f * scale);
+				skelly->SetOrigin(skelly->GetX(), skelly->GetY());
 				tempVector.push_back(skelly);
 			}
 		}
